@@ -3,135 +3,139 @@
 <p align="center">
   <img src="Account-Rotation-Screenshot.png" width="1200">
 </p>
-<p align="center"><i>Main Power BI dashboard displaying customer engagement, rotation timing, workload distribution, and account health insights.</i></p>
-
-
-
-# Account Rotation (3+3 Model) – Customer Engagement Analysis
-
-This project demonstrates a 3+3 account rotation model used for customer engagement tracking and risk identification.  
-All data in this project is fully **anonymized** while keeping the business logic realistic.
+<p align="center"><i>Main Power BI dashboard showing customer engagement, rotation timing, trader workload distribution, and account health insights.</i></p>
 
 ---
 
-## 🔍 Purpose of the Model
+# Account Rotation (3+3 Model) – Customer Engagement Analysis
 
-The goal of this model is to understand:
+This project demonstrates a 3+3 account rotation model used to assess customer engagement and identify accounts requiring trader follow-up.  
+All data is fully **anonymized** while preserving realistic business logic.
+
+---
+
+## 🎯 Purpose of the Model
+
+This model helps commercial teams understand:
 
 - Which customers are **Healthy**
 - Which customers are **Rotatable**
 - Which customers are **At Risk**
+- Which accounts require **immediate trader action**
 - Which customers have been **Reassigned**
-- Which customers require **Immediate Trader Action**
 
-This helps commercial teams prioritize efforts, reduce churn, and maintain strong customer relationships.
-
----
-
-## 📊 Key Features of the Report
-
-### **1. Customer Classification**
-
-Customers are categorized based on recent activity:
-
-- **Healthy** — Active in the last 90 days  
-- **Rotatable** — No activity in the last 90 days  
-- **At Risk** — Declining engagement signals  
-- **New Accounts** — Newly added customers  
-- **Reassigned Accounts** — Trader changed  
+The goal is to improve follow-up efficiency, prevent customer inactivity, and reduce churn.
 
 ---
 
-### **2. Engagement Metrics**
+## 📈 Key Features of the Report
 
-For each customer, the report provides:
+### 1️⃣ Customer Classification
 
-- Enquiry Count  
-- Deal Count  
-- Strike Rate  
-- Volume (and trend)  
-- Last Enquiry Date  
-- Last Deal Date  
-- Activity within rotation window  
+Customers are categorized into:
+
+- **Healthy** — active in the last 90 days  
+- **Rotatable** — no activity in the last 90 days  
+- **At Risk** — declining or inconsistent engagement  
+- **New Accounts** — recently onboarded  
+- **Reassigned** — moved to another trader  
+
+---
+
+### 2️⃣ Engagement Metrics Tracked
+
+For each customer, the model calculates:
+
+- Enquiry count  
+- Deal count  
+- Strike rate  
+- Total volume and trend  
+- Last enquiry date  
+- Last deal date  
 - Days until rotation  
 - Recommended action  
 
+These KPIs give traders a complete view of account activity.
+
 ---
 
-### **3. Trader Workload View**
+### 3️⃣ Trader Workload View
 
 Shows:
 
-- How many accounts each trader must follow up with  
-- How many customers are **At Risk**  
-- Reassigned customers  
-- Priority levels  
+- Accounts requiring follow-up  
+- At-risk customers per trader  
+- Reassigned accounts  
+- Engagement priority (High, Medium, Low)
+
+This helps managers balance workload and monitor trader performance.
 
 ---
 
-### **4. Rotation Timeline**
+### 4️⃣ Rotation Timeline Distribution
 
-Visualizes customer distribution across:
+Visual breakdown of customers by:
 
 - **0–30 days**  
 - **31–60 days**  
 - **61–90 days**  
-- **90+ days (overdue)**  
+- **90+ days (Overdue)**  
 
-This helps managers understand the urgency and volume of pending actions.
-
----
-
-## 🧠 3+3 Rotation Logic (Summary)
-
-The customer is evaluated across two consecutive 3-month engagement windows:
-
-### **What is the 3+3 Model?**
-
-The **3+3 rotation model** evaluates customer engagement using two activity periods:
-
-#### **1. First 3 months — Enquiry Window**
-This period checks whether the customer has made **any enquiries** in the last 90 days.
-
-#### **2. Next 3 months — Deal Window**
-If a customer had enquiries, this second window checks whether any **deals** were concluded in the following 90 days.
+This helps prioritize immediate actions and upcoming deadlines.
 
 ---
 
-### **How Customers Are Classified**
+# 🧠 3+3 Rotation Logic Explained
 
-A customer is considered **Healthy** if they show engagement in either window:
+The customer is evaluated across two sequential 3-month windows.
 
-- An enquiry in the last 3 months, **or**  
-- A deal in the following 3 months.
+### 1️⃣ First 3 Months — Enquiry Window
 
-If a customer shows **no activity for a full 6-month cycle**, they become:
+Checks whether the customer submitted **any enquiries** in the last 90 days.
 
-- **Rotatable**, or  
-- **At Risk**, depending on secondary indicators (volume trend, engagement level, priority, etc.)
+### 2️⃣ Next 3 Months — Deal Window
 
-This model ensures that **no account becomes neglected**, helping traders maintain consistent follow-ups and relationship quality.
+If enquiries were made, this period checks whether any **deals** were completed in the following 90 days.
+
+---
+
+### 📌 Classification Logic
+
+A customer is considered **Healthy** if there is activity in *either* window:
+
+- Enquiry in the past 3 months, or  
+- Deal in the subsequent 3 months  
+
+If **no activity** occurs for a full 6-month period:
+
+- The customer becomes **Rotatable**, or  
+- **At Risk**, based on declining KPIs (volume trend, strike rate, low engagement)
+
+This system ensures **no customer becomes inactive without attention**, improving relationship management.
 
 ---
 
 ## 🛠 Tools & Technologies
 
-- **Power BI Desktop**  
-- **Power Query (M)**  
-- **DAX Measures**  
-- **Synthetic, Anonymized CSV Datasets**
+- **Power BI Desktop**
+- **DAX** (customer health logic, KPIs, time intelligence)
+- **Power Query (M)** (data cleaning and transformation)
+- **Anonymized CSV datasets**
+- **Google Sheets as a cloud data source** (safe for portfolio use)
 
 ---
 
-## 📂 Files Included
+## 📁 Files Included
 
-- `Account-Rotation-3plus3.pbix` — Full Power BI report  
-- `datasets/Customers.csv`  
-- `datasets/Deals.csv`
+- `Account-Rotation-3plus3.pbix` – full Power BI report  
+- `datasets/Customers_Anonymized.csv`  
+- `datasets/Deals_Anonymized.csv`  
+- `datasets/TraderLookup.csv` (if used)
 
 ---
 
 ## ✔ Notes
 
-This project is intended for **portfolio demonstration** only.  
-All customer names, trader names, and sensitive information have been replaced with **synthetic anonymized values**.
+- This project is for **portfolio demonstration only**.  
+- All customer names, trader names, volumes, dates and identifiers have been replaced with **synthetic anonymized values**.  
+- No company information, internal systems, or original file paths are included.
