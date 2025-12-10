@@ -1,4 +1,4 @@
-# 👋 Hi, I'm Zia — Data Analyst & Power BI Developer
+# 👋 Hi, I'm Zia — Data Strategy & Insights Analyst; Power BI Developer
 
 Welcome to my analytics portfolio.  
 I specialize in transforming raw data into clear, actionable insights using **Power BI, DAX, Power Query, and data modelling**.
@@ -47,8 +47,8 @@ Includes:
 ## 📫 Contact
 If you'd like to collaborate or discuss a project:
 
-**Email:** *your email here*  
-**LinkedIn:** *your link here*  
+**Email:** *zulhaq@gmail.com*  
+**LinkedIn:** *www.linkedin.com/in/mziamalik*  
 
 ---
 
