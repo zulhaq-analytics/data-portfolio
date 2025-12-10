@@ -1,8 +1,10 @@
 ## 📊 Dashboard Preview
 
 <p align="center">
-  <img src="Account-Rotation-Screenshot.png" width="1000">
+  <img src="Account-Rotation-Screenshot.png" width="1200">
 </p>
+<p align="center"><i>Main Power BI dashboard displaying customer engagement, rotation timing, workload distribution, and account health insights.</i></p>
+
 
 
 # Account Rotation (3+3 Model) – Customer Engagement Analysis
