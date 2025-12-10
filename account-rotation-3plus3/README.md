@@ -1,8 +1,9 @@
 ## 📊 Dashboard Preview
 
 <p align="center">
-  <img src="Account-Rotation-Screenshot.png" width="900">
+  <img src="Account-Rotation-Screenshot.png" width="1000">
 </p>
+
 
 # Account Rotation (3+3 Model) – Customer Engagement Analysis
 
