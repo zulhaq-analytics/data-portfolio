@@ -1,3 +1,9 @@
+## 📊 Dashboard Preview
+
+<p align="center">
+  <img src="Account-Rotation-Screenshot.png" width="900">
+</p>
+
 # Account Rotation (3+3 Model) – Customer Engagement Analysis
 
 This project demonstrates a 3+3 account rotation model used for customer engagement tracking and risk identification.  
