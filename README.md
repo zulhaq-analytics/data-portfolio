@@ -2,8 +2,7 @@
 
 Welcome to my analytics portfolio.  
 
-I specialize in transforming raw data into clear, actionable insights using **Power BI, DAX, Power Query, SQL, and Python**.  
-My work focuses on solving real business problems across **Trading, Finance, Operations, and CRM** by building scalable, automated, and data-driven reporting solutions.
+I specialize in transforming raw data into clear, actionable insights using **Power BI, DAX, Power Query, SQL, and Python**. My work focuses on solving real business problems across **Trading, Finance, Operations, and CRM** by building scalable, automated, and data-driven reporting solutions.
 
 This repository showcases selected projects that demonstrate my technical capability, business understanding, and end-to-end BI solution design.
 
