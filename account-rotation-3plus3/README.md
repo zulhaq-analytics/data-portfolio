@@ -73,23 +73,26 @@ This helps managers balance workload and monitor trader performance.
 
 ---
 
-### 4️⃣ Vessel Alerts – Upcoming Bunkering Opportunities
+### 4️⃣ Account Alerts – Upcoming Rotation & At-Risk Signals
 
-This feature alerts traders when:
+The dashboard includes an alerting mechanism that highlights accounts requiring immediate trader action.  
+Alerts are triggered based on account activity timelines and health indicators, including:
 
-- One of **their customers' vessels** is expected to require bunkers soon  
-- A vessel is approaching a port where the trader is active  
-- A vessel has exceeded its **typical bunker interval**  
-- A vessel has performed **recent STS activity**, suggesting increased consumption  
-- A vessel has **no recent bunker record** and is within a risk threshold
+- **Accounts approaching rotation** (no activity within the last 60–90 days)
+- **Accounts overdue for rotation** (90+ days without activity)
+- **At-Risk accounts** showing declining engagement or reduced deal volume
+- **Accounts with no enquiries or deals across both 3-month windows**
+- **New accounts requiring onboarding follow-up**
 
-Alerts appear as:
+Each alert includes a recommended action such as:
 
-- **High Priority** (Immediate action recommended)  
-- **Medium Priority** (Monitor closely)  
-- **Low Priority** (Optional follow-up)
+- “Follow up this week”
+- “Re-engage customer”
+- “Account overdue — take action”
+- “Monitor — low recent activity”
+- "New account — initiate relationship contact"
 
-This allows traders to proactively contact customers **before** the vessel submits an enquiry, improving conversion rates.
+These alerts allow traders to maintain consistent engagement and prevent customer attrition.
 
 ---
 
