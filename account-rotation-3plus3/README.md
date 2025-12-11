@@ -35,10 +35,10 @@ The goal is to improve follow-up efficiency, prevent customer inactivity, and re
 
 Customers are categorized into:
 
-- **Healthy** — active in the last 90 days  
-- **Rotatable** — no activity in the last 90 days  
+- **Healthy** — active in the last XX days  
+- **Rotatable** — no activity in the last XX days  
 - **At Risk** — declining or inconsistent engagement  
-- **New Accounts** — recently onboarded  
+- **New Accounts** — recently onboarded
 - **Reassigned** — moved to another trader  
 
 ---
@@ -97,7 +97,7 @@ This allows traders to proactively contact customers **before** the vessel submi
 
 To ensure data confidentiality and personalized insights:
 
-- **Traders only see their own customers + unassigned accounts**
+- **Traders only see their own customers and respective vessels**
 - **Managers see their entire team’s accounts**
 - **Leadership sees all customers**
 
@@ -115,10 +115,10 @@ This ensures a secure, personalized experience that mirrors real-world operation
 
 Visual breakdown of customers by:
 
-- **0–30 days**  
-- **31–60 days**  
-- **61–90 days**  
-- **90+ days (Overdue)**  
+- **0–XX days**  
+- **XX–XX days**  
+- **XX–XX days**  
+- **XX+ days (Overdue)**  
 
 This helps prioritize immediate actions and upcoming deadlines.
 
@@ -126,15 +126,15 @@ This helps prioritize immediate actions and upcoming deadlines.
 
 # 🧠 X+X Rotation Logic Explained
 
-The customer is evaluated across two sequential 3-month windows.
+The customer is evaluated across two sequential X-month windows.
 
 ### 1️⃣ First X Months — Enquiry Window
 
-Checks whether the customer submitted **any enquiries** in the last 90 days.
+Checks whether the customer submitted **any enquiries** in the last XX days.
 
 ### 2️⃣ Next X Months — Deal Window
 
-If enquiries were made, this period checks whether any **deals** were completed in the following 90 days.
+If enquiries were made, this period checks whether any **deals** were completed in the following XX days.
 
 ---
 
