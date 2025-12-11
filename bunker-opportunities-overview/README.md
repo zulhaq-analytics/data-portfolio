@@ -519,7 +519,7 @@ A matrix showing alert counts per trader helps managers balance workload:
 | Component | Technology |
 |-----------|------------|
 | Visualization | Power BI Desktop |
-| Data Sources | S&P Global MINT data, SharePoint Excel files, Power Platform Dataflows |
+| Data Sources | Maritime intelligence data feeds, SharePoint Excel files, Power Platform Dataflows |
 | Calculations | DAX (calculated tables, calculated columns, measures) |
 | Data Transformation | Power Query (M) |
 | Date Intelligence | Custom Calendar Table |
