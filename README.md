@@ -129,10 +129,11 @@ Helped prevent **3–5 potential cash shortfalls per quarter** through proactive
 
 ---
 
-# 📫 Contact
+## 📬 Contact
 
-📧 **Email:** zulhaq@gmail.com  
-🔗 **LinkedIn:** [linkedin.com/in/mziamalik](https://www.linkedin.com/in/mziamalik)  
+**Zia Malik**  
+📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
 
 ---
 
