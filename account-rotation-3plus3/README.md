@@ -1,182 +1,263 @@
+# Account Rotation (3+3 Model) – Customer Engagement Analysis
+
+A Power BI solution that evaluates customer engagement across rolling time windows to classify account health, trigger follow-up alerts, and prevent customer churn in B2B trading environments.
+
+---
+
 ## 📊 Dashboard Preview
 
 <p align="center">
   <img src="Account-Rotation-Screenshot.png" width="1200">
 </p>
-<p align="center"><i>Main Power BI dashboard showing customer engagement, rotation timing, trader workload distribution, and account health insights.</i></p>
+<p align="center"><i>Customer engagement dashboard showing account health, rotation timelines, trader workload, and actionable alerts.</i></p>
 
 ---
 
-# Account Rotation (X+X Model) – Customer Engagement Analysis
+## 🏢 Business Context
 
-This project demonstrates a X+X account rotation model used to assess customer engagement and identify accounts requiring trader follow-up.  
-All data is fully **anonymized** while preserving realistic business logic.
+In commodity trading, customer relationships require consistent engagement. Unlike retail businesses with frequent transactions, B2B trading deals are sporadic — a customer might only place orders a few times per year. This creates a challenge: **how do you identify which accounts are healthy vs. at risk of churning when transaction frequency is naturally low?**
 
----
-
-## 🎯 Purpose of the Model
-
-This model helps commercial teams understand:
-
-- Which customers are **Healthy**
-- Which customers are **Rotatable**
-- Which customers are **At Risk**
-- Which accounts require **immediate trader action**
-- Which customers have been **Reassigned**
-- Which vessels belonging to their customer list are **up for upcoming bunkering** (via alerts)
-
-The goal is to improve follow-up efficiency, prevent customer inactivity, and reduce churn.
+The 3+3 rotation model solves this by:
+- Evaluating **enquiry activity** (engagement signals) separately from **deal activity** (conversion signals)
+- Creating structured follow-up windows that match the natural sales cycle
+- Giving traders early warning before accounts go cold
+- Enabling managers to balance workload and monitor team performance
 
 ---
 
-## 📈 Key Features of the Report
+## 🎯 What This Dashboard Delivers
 
-### 1️⃣ Customer Classification
-
-Customers are categorized into:
-
-- **Healthy** — active in the last XX days  
-- **Rotatable** — no activity in the last XX days  
-- **At Risk** — declining or inconsistent engagement  
-- **New Accounts** — recently onboarded
-- **Reassigned** — moved to another trader  
+| Stakeholder | Value |
+|-------------|-------|
+| **Traders** | Prioritized list of accounts needing follow-up, with recommended actions |
+| **Managers** | Team workload visibility, at-risk account distribution, performance tracking |
+| **Leadership** | Portfolio health overview, churn risk indicators, engagement trends |
 
 ---
 
-### 2️⃣ Engagement Metrics Tracked
+## 🧠 The 3+3 Rotation Logic
+
+Customers are evaluated across two sequential 90-day windows:
+
+```
+│◄────── Window 1: Enquiry ──────►│◄────── Window 2: Deal ──────►│
+│         (Days 0–90)             │        (Days 91–180)          │
+│                                 │                               │
+│   Did customer send enquiries?  │   Did customer close deals?   │
+```
+
+### Classification Rules
+
+| Status | Condition |
+|--------|-----------|
+| **Healthy** | Activity in either window (enquiry OR deal within 180 days) |
+| **At Risk** | Declining engagement pattern — fewer enquiries, lower strike rate, reduced volume |
+| **Rotatable** | No activity across the full 6-month period |
+| **Reassigned** | Account moved to another trader |
+| **New Account** | Onboarded within last 30 days — requires relationship-building focus |
+
+---
+
+## 📈 Key Metrics Tracked
 
 For each customer, the model calculates:
 
-- Enquiry count  
-- Deal count  
-- Strike rate  
-- Total volume and trend  
-- Last enquiry date  
-- Last deal date  
-- Days until rotation  
-- Recommended action  
-
-These KPIs give traders a complete view of account activity.
+- **Enquiry Count** — Total enquiries in evaluation period
+- **Deal Count** — Closed deals in evaluation period
+- **Strike Rate** — Deals ÷ Enquiries (conversion efficiency)
+- **Volume Trend** — Period-over-period volume change
+- **Days Since Last Enquiry** — Recency indicator
+- **Days Since Last Deal** — Conversion recency
+- **Days Until Rotation** — Countdown to account becoming rotatable
+- **Recommended Action** — Automated follow-up guidance
 
 ---
 
-### 3️⃣ Trader Workload View
+## ⚡ Alert System
 
-Shows:
+The dashboard triggers actionable alerts based on account timelines:
 
-- Accounts requiring follow-up  
-- At-risk customers per trader  
-- Reassigned accounts  
-- Engagement priority (High, Medium, Low)
-
-This helps managers balance workload and monitor trader performance.
-
----
-
-### 4️⃣ Account Alerts – Upcoming Rotation & At-Risk Signals
-
-The dashboard includes an alerting mechanism that highlights accounts requiring immediate trader action.  
-Alerts are triggered based on account activity timelines and health indicators, including:
-
-- **Accounts approaching rotation** (no activity within the last XX–XX days)
-- **Accounts overdue for rotation** (XX+ days without activity)
-- **At-Risk accounts** showing declining engagement or reduced deal volume
-- **Accounts with no enquiries or deals across both X-month windows**
-- **New accounts requiring onboarding follow-up**
-
-Each alert includes a recommended action such as:
-
-- “Follow up this week”
-- “Re-engage customer”
-- “Account overdue — take action”
-- “Monitor — low recent activity”
-- "New account — initiate relationship contact"
-
-These alerts allow traders to maintain consistent engagement and prevent customer attrition.
+| Alert Type | Trigger | Recommended Action |
+|------------|---------|-------------------|
+| **Approaching Rotation** | 60–90 days without activity | "Follow up this week" |
+| **Overdue** | 90+ days without activity | "Account overdue — take action" |
+| **At Risk** | Declining KPIs despite activity | "Re-engage customer" |
+| **Low Activity** | Enquiries but no deals | "Monitor — conversion issue" |
+| **New Account** | Onboarded < 30 days | "Initiate relationship contact" |
 
 ---
 
-### 5️⃣ Row-Level Security (RLS)
+## 🔐 Row-Level Security (RLS)
 
-To ensure data confidentiality and personalized insights:
+Data access is controlled by role:
 
-- **Traders only see their own customers and respective vessels**
-- **Managers see their entire team’s accounts**
-- **Leadership sees all customers**
+| Role | Access Level |
+|------|-------------|
+| Trader | Own customers and vessels only |
+| Manager | Entire team's accounts |
+| Leadership | Full portfolio visibility |
 
-RLS is implemented using:
+### RLS Implementation
 
-- Trader table mapping  
-- Role-to-customer relationship filters  
-- Dynamic DAX security logic  
-
-This ensures a secure, personalized experience that mirrors real-world operational access levels.
-
----
-
-### 6️⃣ Rotation Timeline Distribution
-
-Visual breakdown of customers by:
-
-- **0–XX days**  
-- **XX–XX days**  
-- **XX–XX days**  
-- **XX+ days (Overdue)**  
-
-This helps prioritize immediate actions and upcoming deadlines.
+```dax
+// Dynamic security filter applied to Customer table
+[AssignedTraderEmail] = USERPRINCIPALNAME()
+    || LOOKUPVALUE(
+        TeamHierarchy[ManagerEmail],
+        TeamHierarchy[TraderEmail], USERPRINCIPALNAME()
+    ) <> BLANK()
+```
 
 ---
 
-# 🧠 X+X Rotation Logic Explained
+## 🔧 Key DAX Measures
 
-The customer is evaluated across two sequential X-month windows.
+### Account Health Classification
 
-### 1️⃣ First X Months — Enquiry Window
+```dax
+Account Status = 
+VAR DaysSinceEnquiry = DATEDIFF([LastEnquiryDate], TODAY(), DAY)
+VAR DaysSinceDeal = DATEDIFF([LastDealDate], TODAY(), DAY)
+VAR IsNewAccount = [AccountAge] <= 30
 
-Checks whether the customer submitted **any enquiries** in the last XX days.
+RETURN
+SWITCH(
+    TRUE(),
+    IsNewAccount, "New Account",
+    [IsReassigned] = TRUE(), "Reassigned",
+    DaysSinceEnquiry <= 90 || DaysSinceDeal <= 90, "Healthy",
+    DaysSinceEnquiry <= 180 || DaysSinceDeal <= 180, "At Risk",
+    "Rotatable"
+)
+```
 
-### 2️⃣ Next X Months — Deal Window
+### Days Until Rotation
 
-If enquiries were made, this period checks whether any **deals** were completed in the following XX days.
+```dax
+Days Until Rotation = 
+VAR LastActivity = MAX([LastEnquiryDate], [LastDealDate])
+VAR RotationDeadline = DATEADD(LastActivity, 180, DAY)
+VAR DaysRemaining = DATEDIFF(TODAY(), RotationDeadline, DAY)
+
+RETURN
+IF(DaysRemaining < 0, 0, DaysRemaining)
+```
+
+### Strike Rate (Conversion Efficiency)
+
+```dax
+Strike Rate = 
+DIVIDE(
+    [Total Deals],
+    [Total Enquiries],
+    0
+)
+```
+
+### Alert Priority Score
+
+```dax
+Alert Priority = 
+VAR DaysRemaining = [Days Until Rotation]
+VAR StatusWeight = 
+    SWITCH(
+        [Account Status],
+        "At Risk", 100,
+        "Rotatable", 80,
+        "Healthy", 20,
+        "New Account", 50,
+        0
+    )
+
+RETURN
+StatusWeight + (180 - DaysRemaining)
+```
 
 ---
 
-### 📌 Classification Logic
+## 🗂 Data Model
 
-A customer is considered **Healthy** if there is activity in *either* window:
+```
+┌─────────────────┐       ┌─────────────────┐
+│   Customers     │───────│     Deals       │
+│─────────────────│  1:M  │─────────────────│
+│ CustomerID (PK) │       │ DealID (PK)     │
+│ CustomerName    │       │ CustomerID (FK) │
+│ AssignedTrader  │       │ DealDate        │
+│ OnboardDate     │       │ Volume          │
+│ Segment         │       │ Product         │
+└────────┬────────┘       └─────────────────┘
+         │
+         │ 1:M    ┌─────────────────┐
+         └────────│    Enquiries    │
+                  │─────────────────│
+                  │ EnquiryID (PK)  │
+                  │ CustomerID (FK) │
+                  │ EnquiryDate     │
+                  │ Status          │
+                  └─────────────────┘
 
-- Enquiry in the past X months, or  
-- Deal in the subsequent X months  
-
-If **no activity** occurs for a full 6-month period:
-
-- The customer becomes **Rotatable**, or  
-- **At Risk**, based on declining KPIs (volume trend, strike rate, low engagement)
+┌─────────────────┐       ┌─────────────────┐
+│  TraderLookup   │───────│  TeamHierarchy  │
+│─────────────────│  1:1  │─────────────────│
+│ TraderEmail(PK) │       │ TraderEmail     │
+│ TraderName      │       │ ManagerEmail    │
+│ Region          │       │ Department      │
+└─────────────────┘       └─────────────────┘
+```
 
 ---
 
-## 🛠 Tools & Technologies
+## 🛠 Technical Stack
 
-- **Power BI Desktop**  
-- **DAX** (customer health logic, KPIs, time intelligence, alert logic)  
-- **Power Query (M)** (data cleaning and transformation)  
-- **Google Sheets** as a cloud data source  
-- **Dynamic RLS** for secure, user-specific filtering  
-- **Anonymized CSV datasets**
-
----
-
-## 📁 Files Included
-
-- `Account-Rotation-3plus3.pbix` – full Power BI report  
-- `datasets/Customers_Anonymized.csv`  
-- `datasets/Deals_Anonymized.csv`  
-- `datasets/TraderLookup.csv` (if used)
+| Component | Technology |
+|-----------|------------|
+| Visualization | Power BI Desktop |
+| Data Modeling | Star schema with role-playing dimensions |
+| Calculations | DAX (time intelligence, dynamic classification, RLS) |
+| Data Transformation | Power Query (M) |
+| Data Source | Google Sheets (cloud-hosted anonymized data) |
+| Security | Dynamic Row-Level Security |
 
 ---
 
-## ✔ Notes
+## 📁 Repository Contents
 
-- This project is for **portfolio demonstration only**.  
-- All customer names, trader names, vessel data, volumes, dates and identifiers have been replaced with **synthetic anonymized values**.  
-- No company information, internal systems, or original file paths are included.  
+```
+account-rotation-3plus3/
+├── Account-Rotation-3plus3.pbix    # Full Power BI report
+├── Account-Rotation-Screenshot.png  # Dashboard preview
+├── README.md
+└── datasets/
+    ├── Customers_Anonymized.csv
+    ├── Deals_Anonymized.csv
+    ├── Enquiries_Anonymized.csv
+    └── TraderLookup.csv
+```
+
+---
+
+## 💡 Design Decisions
+
+1. **Why 3+3 instead of 6-month rolling?**  
+   Separating enquiry and deal windows allows distinguishing between "engaged but not converting" (sales issue) vs. "not engaging at all" (relationship issue) — each requires different intervention.
+
+2. **Why priority scoring instead of just status?**  
+   Multiple accounts can be "At Risk" but urgency varies. The scoring system combines status severity with time pressure for better prioritization.
+
+3. **Why RLS over separate reports?**  
+   Single report with dynamic filtering scales better, ensures consistent metrics across roles, and simplifies maintenance.
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for **portfolio demonstration only**. All customer names, trader identities, volumes, dates, and business identifiers have been replaced with synthetic anonymized values. No proprietary business logic, internal systems, or confidential information is included.
+
+---
+
+## 📬 Contact
+
+**Muhammad Zia Ul Haq**  
+📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
