@@ -419,6 +419,245 @@ SWITCH(
 
 ---
 
+## 🔒 Row-Level Security (RLS)
+
+RLS ensures traders see only their assigned accounts while managers and leadership get appropriate visibility.
+
+### Access Matrix
+
+| Role | Customers | Metrics | Rotation Queue | Team Comparison |
+|------|-----------|---------|----------------|-----------------|
+| **Trader** | Own assigned only | Own accounts only | Own accounts only | ❌ Hidden |
+| **Manager** | All team members | Team aggregate | Team accounts | ✅ Own team |
+| **Leadership** | All customers | Full business | All accounts | ✅ All teams |
+
+### RLS Implementation
+
+**Role: Trader**
+```dax
+// Filter on Trader Lookup table
+[Email] = USERPRINCIPALNAME()
+```
+
+**Role: Manager**
+```dax
+// Filter on Trader Lookup table - sees own + direct reports
+[Email] = USERPRINCIPALNAME()
+    || [Manager Email] = USERPRINCIPALNAME()
+```
+
+**Role: Leadership**
+```dax
+// No filter applied - full access
+// Or filter by role column:
+LOOKUPVALUE(
+    'Trader Lookup'[Role],
+    'Trader Lookup'[Email], USERPRINCIPALNAME()
+) IN {"Director", "VP", "CEO"}
+```
+
+### How RLS Flows Through the Model
+
+```
+Trader Lookup (RLS Filter)
+        │
+        ▼
+Customers Lookup[Trader]
+        │
+    ┌───┴───┐
+    ▼       ▼
+  Deals   Enquiries
+    │       │
+    └───┬───┘
+        ▼
+  All KPIs & Visuals
+```
+
+Since Customers Lookup connects to both Deals and Enquiries via Customer Key, and to Trader Lookup via Trader, the RLS filter propagates automatically to all transaction data.
+
+---
+
+## 🚨 Alert System – Proactive Account Management
+
+The dashboard includes alerts to help traders and managers act before accounts slip away.
+
+### Alert Categories
+
+| Alert Level | Trigger Condition | Audience | Action Required |
+|-------------|-------------------|----------|-----------------|
+| 🔴 **Critical** | Rotatable + Previous High Volume | Trader + Manager | Immediate outreach or reassignment decision |
+| 🟠 **Urgent** | At Risk + High Value (Volume > threshold) | Trader | Schedule follow-up within 7 days |
+| 🟡 **Warning** | 0-30 Days to rotation | Trader | Plan engagement activity |
+| 🔵 **Watch** | Engagement Level dropped | Manager | Review trader workload |
+
+### Account Alert Level (Calculated Column on Customers Lookup)
+
+```dax
+Alert Level = 
+VAR _Status = 'Customers Lookup'[Unified Status]
+VAR _DaysLeft = 'Customers Lookup'[Days Until Rotation]
+VAR _Volume = 
+    CALCULATE(
+        SUM(Deals[Volume]),
+        ALLEXCEPT('Customers Lookup', 'Customers Lookup'[Customer Key])
+    )
+VAR _HighValue = _Volume > 50000
+VAR _EngagementLevel = 'Customers Lookup'[Engagement Level Column]
+
+RETURN
+SWITCH(
+    TRUE(),
+    -- Critical: Rotatable with history
+    _Status = "Rotatable" && _HighValue, "🔴 Critical",
+    
+    -- Urgent: At Risk with high value
+    _Status = "At Risk" && _HighValue, "🟠 Urgent",
+    
+    -- Warning: Approaching rotation
+    _Status IN {"At Risk", "Healthy"} && _DaysLeft <= 30 && _DaysLeft > 0, "🟡 Warning",
+    
+    -- Watch: Dormant engagement
+    _EngagementLevel = "Dormant", "🔵 Watch",
+    
+    -- No alert
+    BLANK()
+)
+```
+
+### Alert Count Measures
+
+**Critical Alerts (for KPI card):**
+```dax
+Critical Alerts = 
+COUNTROWS(
+    FILTER(
+        'Customers Lookup',
+        'Customers Lookup'[Alert Level] = "🔴 Critical"
+    )
+)
+```
+
+**Total Active Alerts:**
+```dax
+Total Active Alerts = 
+COUNTROWS(
+    FILTER(
+        'Customers Lookup',
+        NOT ISBLANK('Customers Lookup'[Alert Level])
+    )
+)
+```
+
+**Alerts by Trader (for Manager view):**
+```dax
+Trader Alert Summary = 
+VAR _Trader = SELECTEDVALUE('Customers Lookup'[Trader])
+VAR _Critical = CALCULATE([Critical Alerts], 'Customers Lookup'[Trader] = _Trader)
+VAR _Urgent = CALCULATE(
+    COUNTROWS(FILTER('Customers Lookup', [Alert Level] = "🟠 Urgent")),
+    'Customers Lookup'[Trader] = _Trader
+)
+VAR _Warning = CALCULATE(
+    COUNTROWS(FILTER('Customers Lookup', [Alert Level] = "🟡 Warning")),
+    'Customers Lookup'[Trader] = _Trader
+)
+
+RETURN
+"🔴 " & _Critical & " | 🟠 " & _Urgent & " | 🟡 " & _Warning
+```
+
+### Engagement Drop Alert (Measure)
+
+Flags accounts where engagement level has declined:
+
+```dax
+Engagement Dropped Accounts = 
+VAR _CurrentPeriod = TODAY()
+VAR _PriorPeriod = TODAY() - 90
+
+RETURN
+COUNTROWS(
+    FILTER(
+        'Customers Lookup',
+        -- Had activity in prior 90 days
+        CALCULATE(
+            COUNTROWS(Enquiries),
+            Enquiries[Enquiry Date] >= _PriorPeriod - 90,
+            Enquiries[Enquiry Date] < _PriorPeriod
+        ) > 0
+        &&
+        -- No activity in current 90 days
+        CALCULATE(
+            COUNTROWS(Enquiries),
+            Enquiries[Enquiry Date] >= _PriorPeriod,
+            Enquiries[Enquiry Date] <= _CurrentPeriod
+        ) = 0
+    )
+)
+```
+
+### Volume at Risk by Alert Level (Measure)
+
+```dax
+Volume at Risk by Alert = 
+CALCULATE(
+    SUM(Deals[Volume]),
+    FILTER(
+        'Customers Lookup',
+        'Customers Lookup'[Alert Level] IN {"🔴 Critical", "🟠 Urgent"}
+    )
+)
+```
+
+### Alert Distribution Matrix
+
+For manager dashboards showing alert distribution across traders:
+
+| Trader | 🔴 Critical | 🟠 Urgent | 🟡 Warning | 🔵 Watch | Total |
+|--------|-------------|-----------|------------|----------|-------|
+| Trader A | 2 | 5 | 12 | 8 | 27 |
+| Trader B | 0 | 3 | 8 | 15 | 26 |
+| Trader C | 4 | 7 | 18 | 3 | 32 |
+
+---
+
+## 🔄 Optional: Power Automate Integration
+
+### Weekly Rotation Report to Managers
+
+```
+Trigger: Scheduled (Monday 8:00 AM)
+Action:
+  1. Query Power BI dataset for Critical + Urgent alerts per team
+  2. Generate summary table by trader
+  3. Send email to each manager with their team's alert status
+  4. Include: Account name, days until rotation, volume at risk
+```
+
+### Daily Trader Alert Notification
+
+```
+Trigger: Scheduled (daily at 7:30 AM)
+Action:
+  1. Query accounts where Alert Level = "🔴 Critical" or "🟠 Urgent"
+  2. Filter by trader (loop through each trader)
+  3. Send personalized Teams message or email
+  4. Include: Customer name, status, days remaining, recommended action
+```
+
+### Rotation Threshold Alert
+
+```
+Trigger: Data-driven (when Rotatable % > 40% for any trader)
+Action:
+  1. Post to Sales Management Teams channel
+  2. Tag the trader's manager
+  3. Include: Trader name, rotation %, volume at risk
+  4. Suggest workload review or reassignment
+```
+
+---
+
 ## 🛠 Technical Stack
 
 | Component | Technology |
@@ -429,6 +668,8 @@ SWITCH(
 | Data Transformation | Power Query (M) |
 | Data Sources | Power Platform Dataflows, SharePoint Excel files |
 | Date Intelligence | Custom Date Table with inactive relationships |
+| Row-Level Security | Dynamic RLS via USERPRINCIPALNAME() |
+| Alerts | Power Automate (optional) |
 
 ---
 
@@ -459,9 +700,9 @@ account-rotation-3plus3/
 ├── Account-Rotation-Screenshot.png  # Dashboard preview
 ├── README.md
 └── datasets/
-    ├── Customers.csv
-    ├── Deals.csv
-    ├── Enquiries.csv
+    ├── Customers_Anonymized.csv
+    ├── Deals_Anonymized.csv
+    ├── Enquiries_Anonymized.csv
     └── TraderLookup.csv
 ```
 
