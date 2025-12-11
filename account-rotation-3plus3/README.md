@@ -7,7 +7,7 @@
 
 ---
 
-# Account Rotation (3+3 Model) – Customer Engagement Analysis
+# Account Rotation (X+X Model) – Customer Engagement Analysis
 
 This project demonstrates a X+X account rotation model used to assess customer engagement and identify accounts requiring trader follow-up.  
 All data is fully **anonymized** while preserving realistic business logic.
