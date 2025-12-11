@@ -129,7 +129,7 @@ This dashboard contains **no real financial data**.
 - **Power BI Desktop**
 - **DAX** for running totals and forecasting logic  
 - **Power Query (M)** for data cleaning and anonymization  
-- **SharePoint / Excel** as data sources  
+- **Microsoft Business Central & SharePoint** as data sources  
 - **Custom date intelligence model**  
 
 ---
