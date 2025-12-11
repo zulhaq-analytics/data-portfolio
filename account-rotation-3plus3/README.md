@@ -23,6 +23,7 @@ This model helps commercial teams understand:
 - Which customers are **At Risk**
 - Which accounts require **immediate trader action**
 - Which customers have been **Reassigned**
+- Which vessels belonging to their customer list are **up for upcoming bunkering** (via alerts)
 
 The goal is to improve follow-up efficiency, prevent customer inactivity, and reduce churn.
 
@@ -72,7 +73,45 @@ This helps managers balance workload and monitor trader performance.
 
 ---
 
-### 4️⃣ Rotation Timeline Distribution
+### 4️⃣ Vessel Alerts – Upcoming Bunkering Opportunities
+
+This feature alerts traders when:
+
+- One of **their customers' vessels** is expected to require bunkers soon  
+- A vessel is approaching a port where the trader is active  
+- A vessel has exceeded its **typical bunker interval**  
+- A vessel has performed **recent STS activity**, suggesting increased consumption  
+- A vessel has **no recent bunker record** and is within a risk threshold
+
+Alerts appear as:
+
+- **High Priority** (Immediate action recommended)  
+- **Medium Priority** (Monitor closely)  
+- **Low Priority** (Optional follow-up)
+
+This allows traders to proactively contact customers **before** the vessel submits an enquiry, improving conversion rates.
+
+---
+
+### 5️⃣ Row-Level Security (RLS)
+
+To ensure data confidentiality and personalized insights:
+
+- **Traders only see their own customers + unassigned accounts**
+- **Managers see their entire team’s accounts**
+- **Leadership sees all customers**
+
+RLS is implemented using:
+
+- Trader table mapping  
+- Role-to-customer relationship filters  
+- Dynamic DAX security logic  
+
+This ensures a secure, personalized experience that mirrors real-world operational access levels.
+
+---
+
+### 6️⃣ Rotation Timeline Distribution
 
 Visual breakdown of customers by:
 
@@ -111,17 +150,16 @@ If **no activity** occurs for a full 6-month period:
 - The customer becomes **Rotatable**, or  
 - **At Risk**, based on declining KPIs (volume trend, strike rate, low engagement)
 
-This system ensures **no customer becomes inactive without attention**, improving relationship management.
-
 ---
 
 ## 🛠 Tools & Technologies
 
-- **Power BI Desktop**
-- **DAX** (customer health logic, KPIs, time intelligence)
-- **Power Query (M)** (data cleaning and transformation)
+- **Power BI Desktop**  
+- **DAX** (customer health logic, KPIs, time intelligence, alert logic)  
+- **Power Query (M)** (data cleaning and transformation)  
+- **Google Sheets** as a cloud data source  
+- **Dynamic RLS** for secure, user-specific filtering  
 - **Anonymized CSV datasets**
-- **Google Sheets as a cloud data source** (safe for portfolio use)
 
 ---
 
@@ -137,5 +175,5 @@ This system ensures **no customer becomes inactive without attention**, improvin
 ## ✔ Notes
 
 - This project is for **portfolio demonstration only**.  
-- All customer names, trader names, volumes, dates and identifiers have been replaced with **synthetic anonymized values**.  
-- No company information, internal systems, or original file paths are included.
+- All customer names, trader names, vessel data, volumes, dates and identifiers have been replaced with **synthetic anonymized values**.  
+- No company information, internal systems, or original file paths are included.  
