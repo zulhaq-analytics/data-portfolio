@@ -38,19 +38,29 @@ This repository showcases selected projects that demonstrate my technical capabi
 
 ### 1️⃣ **Account Rotation (3+3) – Customer Engagement Model**
 A Power BI model that evaluates customer activity across enquiry and deal windows to classify accounts as **Healthy**, **Rotatable**, **At Risk**, or **Reassigned**.  
-Includes dynamic rotation timing, trader workload insights, account alerts, and KPI-driven customer scoring.
+Includes engagement scoring, rotation timing, and trader workload insights.
 
-🔗 **View Project Folder:**  
-👉 [account-rotation-3plus3](./account-rotation-3plus3)
+🔗 **View Project:**  
+[account-rotation-3plus3](./account-rotation-3plus3)
 
 ---
 
 ### 2️⃣ **Bunker Opportunities Overview – Vessel Activity & Demand Forecasting**
-A Power BI dashboard that identifies upcoming **bunker sales opportunities** using vessel movement intelligence, ETA forecasting, last bunker history, destination analysis, and historical STS operations.  
-Features a custom **High Potential Engine** that scores vessels based on bunker consumption cycles, voyage patterns, and alert indicators.
+A maritime intelligence dashboard that analyzes vessel movement patterns, ETA forecasts, last bunker history, and STS operations to identify upcoming bunker sales opportunities.  
+Features a custom **High Potential Engine** that ranks vessels by bunker likelihood.
 
-🔗 **View Project Folder:**  
-👉 [bunker-opportunities-overview](./bunker-opportunities-overview)
+🔗 **View Project:**  
+[bunker-opportunities-overview](./bunker-opportunities-overview)
+
+---
+
+### 3️⃣ **Cash Utilization Tracker – Allocation, Forecasting & Liquidity Insights**
+A comprehensive Power BI dashboard showing **running cash utilization**, **allocation limits**, **90-day projections**, and **overdue AR/AP**.  
+All values and identifiers are fully anonymized while keeping realistic business logic.
+
+🔗 **View Project:**  
+[cash-utilization-tracker](./cash-utilization-tracker)
+
 
 ---
 
