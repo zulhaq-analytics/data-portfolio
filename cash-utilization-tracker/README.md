@@ -393,7 +393,7 @@ Proactive alerts help treasury and collections teams act before issues escalate.
 
 | Alert Level | Condition | Action Required |
 |-------------|-----------|-----------------|
-| 🔴 **Critical** | Available Cash < 10% of Allocated | Escalate to leadership, pause new deals |
+| 🔴 **Critical** | Available Cash < 10% of Allocated | Escalate to leadership |
 | 🟠 **Warning** | Available Cash < 25% of Allocated | Review pipeline, accelerate collections |
 | 🟡 **Watch** | Overdue Receivables > 15% of Receivables | Follow up with customers |
 | 🔵 **Info** | Large payment due in 7 days | Ensure funds available |
