@@ -34,6 +34,17 @@ This repository showcases selected projects that demonstrate my technical capabi
 
 ---
 
+## 📊 Portfolio Preview
+
+<p align="center">
+  <img src="account-rotation-3plus3/Account-Rotation-Screenshot.png" width="900">
+</p>
+
+<p align="center"><i>A glimpse of my Power BI dashboards — clear, structured, and business-focused.</i></p>
+
+---
+
+
 ## 📂 Featured Projects
 
 ### 1️⃣ **Account Rotation (3+3) – Customer Engagement Model**
