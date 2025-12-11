@@ -597,7 +597,7 @@ bunker-opportunities-overview/
 This project is for **portfolio demonstration only**. All vessel names, IMO numbers, operator names, and sensitive details in the screenshot have been redacted or blurred. The actual datasets are not included due to:
 - Confidentiality of maritime intelligence data
 - Large dataset size making dummy data generation impractical
-- Proprietary S&P Global MINT data licensing
+- Proprietary Maritime intelligence data feeds
 
 The DAX code and data model documentation demonstrate the technical approach and business logic.
 
