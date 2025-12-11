@@ -6,6 +6,7 @@
 # 👋 Hi, I'm Zia — Data Strategy & Insights Analyst | Power BI Developer
 
 Welcome to my analytics portfolio.  
+
 I specialize in transforming raw data into clear, actionable insights using **Power BI, DAX, Power Query, SQL, and Python**.  
 My work focuses on solving real business problems across **Trading, Finance, Operations, and CRM** by building scalable, automated, and data-driven reporting solutions.
 
