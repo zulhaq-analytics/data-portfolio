@@ -1,7 +1,7 @@
 ## 📊 Dashboard Preview
 
 <p align="center">
-  <img src="possible-bunker-opportunities.png" width="1500">
+  <img src="possible-bunker-opportunities.png" width="1200">
 </p>
 <p align="center"><i>Dashboard preview with sensitive vessel and operator details blurred for confidentiality.</i></p>
 
@@ -23,7 +23,8 @@ The analytics model helps commercial and trading teams:
 - Forecast **upcoming vessel arrivals**
 - Prioritize high-potential commercial leads
 - Analyze **historical STS operations**
-- Provide a focused, high-quality **opportunity pipeline** for traders
+- Generate **proactive alerts for traders**
+- Provide a focused, high-quality **opportunity pipeline**
 
 The goal is to improve proactive outreach and increase bunker conversion rates.
 
@@ -33,7 +34,7 @@ The goal is to improve proactive outreach and increase bunker conversion rates.
 
 - **Potential Bunker Opportunities**
 - **Recently Bunkered Vessels**
-- **Upcoming Arrivals – Next 30 Days**
+- **Upcoming Arrivals – Next XX Days**
 - **Days Since Last Bunker**
 - **High Potential Flags**
 - **Confidence Level / Source**
@@ -46,68 +47,56 @@ The goal is to improve proactive outreach and increase bunker conversion rates.
 The model determines bunker demand likelihood using several factors:
 
 ### **1️⃣ Last Bunker Date Logic**
-- Compares the vessel’s last known bunker date with:
-  - Typical bunker intervals
-  - Vessel type consumption patterns
-  - Historical cruising behavior
+- Evaluates typical bunker cycles  
+- Adjusts based on vessel class and DWT  
+- Flags vessels approaching expected bunker intervals  
 
 ### **2️⃣ Destination-Based Prediction**
-- If a vessel is headed toward a major bunker port with no recent bunker event → **increases potential**.
+- High-bunkering ports (e.g., Singapore, Fujairah, Rotterdam) increase probability  
+- Non-bunker ports decrease probability  
 
 ### **3️⃣ Vessel Type Consumption Profile**
-Fuel consumption varies widely by vessel class:
-- High burn rate → Container / Tanker / VLCC  
-- Lower burn rate → Bulk Carrier / LPG  
-Scoring adjusts accordingly.
+Fuel consumption varies widely:
+- High burn → Tanker, Container, VLCC  
+- Low burn → Bulk Carrier, LPG  
 
 ### **4️⃣ STS Operation History**
-Recent STS involvement indicates:
-- Possible refueling offshore  
-- Transfer operations that impact consumption  
-Used as a weighting factor.
+Recent STS events can indicate:
+- Recent bunker uplift  
+- Preparation for onward long-haul movement  
 
 ### **5️⃣ Recently Bunkered Filter**
-Automatically excludes vessels that have bunkered very recently.
+Realistically excludes vessels that bunkered recently.
 
 ---
 
 # ⭐ High Potential Engine – How It Works
 
-The **High Potential Engine** is a custom scoring and classification model that ranks vessels by their likelihood to require bunkers soon. It combines multiple maritime signals into one unified output.
+The **High Potential Engine** is a custom scoring model that ranks vessels by their likelihood to require bunkers soon.
 
 ### **What the Engine Evaluates**
 
 #### **1️⃣ Days Since Last Bunker**
-- Measures time passed vs. vessel-type bunker cycle.
-- Example:
-  - Tanker → shorter interval → faster scoring
-  - Bulk Carrier → longer interval → slower scoring
+- Compares time passed with expected bunker cycle per vessel type  
 
 #### **2️⃣ Destination Port Analysis**
-- Looks at next known port or ETA.
-- If destination is a high-bunkering port (e.g., Fujairah / Singapore / Rotterdam) and last bunker was long ago → **High Potential**.
+- High-demand ports increase scoring  
+- Long voyages without bunker events increase scoring further  
 
 #### **3️⃣ ETA Forecast**
-- Vessels arriving in the next **7–30 days** are prioritized.
-- Helps traders prepare ahead of time.
+- Vessels arriving in the next **X–XX days** receive priority  
 
 #### **4️⃣ Consumption Model by Vessel Type**
-Applies expected fuel burn rate:
-- High consumption = climbs to High Potential faster  
-- Low consumption = slower movement
+- Faster consumption → faster increase in potential  
 
 #### **5️⃣ Compliance & Alert Flags**
-- Operational alerts may modify scoring.
-- E.g., compliance alerts, restricted operations, etc.
+- Operational anomalies affect scoring  
 
 #### **6️⃣ STS Event Detection**
-- Recent STS activity can mean:
-  - A bunker event already happened → reduce score
-  - Vessel preparing for a long voyage → increase score  
-Engine adjusts automatically.
+- Recent STS → adjust scoring depending on context  
 
 #### **7️⃣ Recently Bunkered Filter**
-- Overrides all scoring and marks vessel as **Not a Lead**.
+- Overrides everything → marks “Not a Lead”
 
 ---
 
@@ -118,7 +107,56 @@ Engine adjusts automatically.
 - **Recently Bunkered — Excluded**
 - **Not a Lead — Low Priority**
 
-This system allows traders to focus immediately on vessels with the highest probability of needing bunkers.
+---
+
+# 🚨 Vessel Alerts – Upcoming Bunkering Signals
+
+The dashboard includes an alerting mechanism that automatically flags vessels requiring attention.
+
+Alerts are triggered when:
+
+- A vessel is **approaching its typical bunker interval**
+- ETA to a major bunker port is within **X–XX days**
+- The vessel has **no recent bunker history**
+- Recent **STS activity** suggests increased consumption
+- A vessel’s fuel pattern deviates from expected cycles
+- A vessel shows **high distance traveled since last bunker**
+
+Output alert levels:
+
+- **🔴 High Priority** – Contact customer immediately  
+- **🟠 Medium Priority** – Monitor and prepare follow-up  
+- **🟡 Low Priority** – Optional follow-up  
+
+These alerts help traders proactively engage customers **before** enquiries arrive.
+
+---
+
+# 🔒 Row-Level Security (RLS)
+
+RLS ensures that each trader only sees vessels relevant to their portfolio.
+
+### **RLS Rules Implemented**
+
+- **Traders** see:
+  - Vessels linked to their customer list  
+  - Vessels flagged as “Unassigned”  
+  - Vessel opportunities only in their managed ports  
+
+- **Managers** see:
+  - All vessels under their team’s customers  
+  - All team opportunity alerts  
+
+- **Leadership** sees:
+  - All vessels and all opportunity pipelines  
+
+### **Technical Implementation**
+- Trader dimension table with unique user mapping  
+- Customer–vessel relationship mapping  
+- DAX-based security filters  
+- Port-level filtering for geography-specific teams  
+
+This ensures data confidentiality and aligns the report with real-world operational access.
 
 ---
 
@@ -133,46 +171,41 @@ Summarizes:
 ---
 
 ### **2️⃣ Upcoming Bunker Opportunities**
-Detailed table including:
+Includes:
 - Vessel characteristics  
 - ETA and destination  
 - Last bunker date and port  
-- Days since last bunker  
-- Opportunity classification  
-- High Potential indicators  
-- Compliance alerts  
+- High potential scoring  
+- Alert level (High, Medium, Low)  
 
 ---
 
 ### **3️⃣ Possible Bunker Locations**
-Predicts which ports are likely to be considered by vessels soon.
+Predicts suitable bunkering ports based on sector patterns.
 
 ---
 
 ### **4️⃣ Historic STS Operations**
-Displays synthetic, safe STS data including:
-- Operation dates  
-- Vessel types  
+Displays synthetic, anonymized STS activity:
+- Dates  
 - Cargo types  
-- Operators  
-Sensitive real-world identifiers are blurred.
+- Vessel classes  
 
 ---
 
 # 🛠 Tools & Technologies
 
 - **Power BI Desktop**
-- **Power Query (M)** – data transformation
-- **DAX** – scoring logic, date intervals, custom KPIs
-- **Synthetic & blurred datasets** (for portfolio safety)
-- **Maritime domain logic** (ETA, bunker cycles, STS activity)
+- **Power Query (M)** – data transformation  
+- **DAX** – scoring model, alerts, ETA logic  
+- **Synthetic & blurred datasets**  
+- **Row-Level Security (RLS)**  
+- **Maritime consumption logic**  
 
 ---
 
 # ✔ Notes
 
 - All vessel names, IMOs, operators, and dates are **blurred** for confidentiality.  
-- Underlying operational data is not included due to sensitivity and volume.  
-- This dashboard is a **representation** of an analytical model used in maritime/bunkering workflows.  
-- The scoring logic is simplified for portfolio clarity while demonstrating strong analytical capability.
-
+- Operational datasets are not included due to sensitivity and size.  
+- This dashboard demonstrates maritime analytics, forecasting, and opportunity scoring.  
