@@ -9,7 +9,7 @@
 
 # Account Rotation (3+3 Model) – Customer Engagement Analysis
 
-This project demonstrates a 3+3 account rotation model used to assess customer engagement and identify accounts requiring trader follow-up.  
+This project demonstrates a X+X account rotation model used to assess customer engagement and identify accounts requiring trader follow-up.  
 All data is fully **anonymized** while preserving realistic business logic.
 
 ---
@@ -124,15 +124,15 @@ This helps prioritize immediate actions and upcoming deadlines.
 
 ---
 
-# 🧠 3+3 Rotation Logic Explained
+# 🧠 X+X Rotation Logic Explained
 
 The customer is evaluated across two sequential 3-month windows.
 
-### 1️⃣ First 3 Months — Enquiry Window
+### 1️⃣ First X Months — Enquiry Window
 
 Checks whether the customer submitted **any enquiries** in the last 90 days.
 
-### 2️⃣ Next 3 Months — Deal Window
+### 2️⃣ Next X Months — Deal Window
 
 If enquiries were made, this period checks whether any **deals** were completed in the following 90 days.
 
@@ -142,8 +142,8 @@ If enquiries were made, this period checks whether any **deals** were completed 
 
 A customer is considered **Healthy** if there is activity in *either* window:
 
-- Enquiry in the past 3 months, or  
-- Deal in the subsequent 3 months  
+- Enquiry in the past X months, or  
+- Deal in the subsequent X months  
 
 If **no activity** occurs for a full 6-month period:
 
