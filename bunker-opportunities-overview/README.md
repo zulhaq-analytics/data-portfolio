@@ -9,23 +9,23 @@
 
 # Bunker Opportunities Overview – Vessel Activity & Potential Demand Analysis
 
-This dashboard identifies **potential bunker opportunities** by analyzing vessel activity, estimated arrival dates, last bunker history, and historic STS operations.  
+This dashboard identifies **potential bunker opportunities** by analyzing vessel activity, estimated arrival dates, last bunker history, and historical STS operations.  
 All vessel names, IMOs, operators, and sensitive fields in this preview have been **blurred or anonymized**.
 
 ---
 
 ## 🎯 Purpose of the Model
 
-This model enables commercial and trading teams to:
+The analytics model helps commercial and trading teams:
 
-- Detect **vessels likely to require bunkers soon**  
-- Identify **recently bunkered vessels**  
-- Prioritize high-potential opportunities  
-- Forecast **upcoming vessel arrivals** at key ports  
-- Analyze **historical STS movements** to identify offshore bunker activity  
-- Provide traders with a focused, actionable vessel list  
+- Detect **vessels likely to require bunkers soon**
+- Identify **recently bunkered vessels**
+- Forecast **upcoming vessel arrivals**
+- Prioritize high-potential commercial leads
+- Analyze **historical STS operations**
+- Provide a focused, high-quality **opportunity pipeline** for traders
 
-The goal is to support proactive outreach and improve conversion rates in bunker sales.
+The goal is to improve proactive outreach and increase bunker conversion rates.
 
 ---
 
@@ -36,73 +36,143 @@ The goal is to support proactive outreach and improve conversion rates in bunker
 - **Upcoming Arrivals – Next 30 Days**
 - **Days Since Last Bunker**
 - **High Potential Flags**
-- **Confidence Level / Source Type**
+- **Confidence Level / Source**
 - **Commodity & Grade Summary**
 
 ---
 
-## 🧠 Opportunity Identification Logic (Simplified)
+# 🧠 Opportunity Identification Logic (Simplified Overview)
 
-### 1️⃣ Last Bunker Date Logic  
-- Each vessel’s last bunker date is compared against:  
-  - Typical bunker intervals by vessel type  
-  - Known consumption patterns  
-  - Historical bunker behavior  
+The model determines bunker demand likelihood using several factors:
 
-### 2️⃣ Destination-Based Analysis  
-- Vessels heading toward major bunker ports with no recent bunker event are flagged.
+### **1️⃣ Last Bunker Date Logic**
+- Compares the vessel’s last known bunker date with:
+  - Typical bunker intervals
+  - Vessel type consumption patterns
+  - Historical cruising behavior
 
-### 3️⃣ Consumption / Vessel Type Scoring  
-Different vessel classes (Container, Tanker, Bulk, LPG, etc.) have different fuel burn rates.  
-This affects opportunity scoring.
+### **2️⃣ Destination-Based Prediction**
+- If a vessel is headed toward a major bunker port with no recent bunker event → **increases potential**.
 
-### 4️⃣ STS History  
-Recent STS operations often indicate fuel movement or transshipment activities.  
-This helps refine opportunity predictions.
+### **3️⃣ Vessel Type Consumption Profile**
+Fuel consumption varies widely by vessel class:
+- High burn rate → Container / Tanker / VLCC  
+- Lower burn rate → Bulk Carrier / LPG  
+Scoring adjusts accordingly.
 
-### 5️⃣ Recently Bunkered Filter  
-Quickly removes vessels that have already bunkered and should not be contacted.
+### **4️⃣ STS Operation History**
+Recent STS involvement indicates:
+- Possible refueling offshore  
+- Transfer operations that impact consumption  
+Used as a weighting factor.
+
+### **5️⃣ Recently Bunkered Filter**
+Automatically excludes vessels that have bunkered very recently.
 
 ---
 
-## 🗂 Dashboard Sections
+# ⭐ High Potential Engine – How It Works
 
-### **1. Port-Level Opportunity Summary**
-Shows potential and recently bunkered totals by port.
+The **High Potential Engine** is a custom scoring and classification model that ranks vessels by their likelihood to require bunkers soon. It combines multiple maritime signals into one unified output.
 
-### **2. Upcoming Bunker Opportunities Table**
-Includes:
+### **What the Engine Evaluates**
+
+#### **1️⃣ Days Since Last Bunker**
+- Measures time passed vs. vessel-type bunker cycle.
+- Example:
+  - Tanker → shorter interval → faster scoring
+  - Bulk Carrier → longer interval → slower scoring
+
+#### **2️⃣ Destination Port Analysis**
+- Looks at next known port or ETA.
+- If destination is a high-bunkering port (e.g., Fujairah / Singapore / Rotterdam) and last bunker was long ago → **High Potential**.
+
+#### **3️⃣ ETA Forecast**
+- Vessels arriving in the next **7–30 days** are prioritized.
+- Helps traders prepare ahead of time.
+
+#### **4️⃣ Consumption Model by Vessel Type**
+Applies expected fuel burn rate:
+- High consumption = climbs to High Potential faster  
+- Low consumption = slower movement
+
+#### **5️⃣ Compliance & Alert Flags**
+- Operational alerts may modify scoring.
+- E.g., compliance alerts, restricted operations, etc.
+
+#### **6️⃣ STS Event Detection**
+- Recent STS activity can mean:
+  - A bunker event already happened → reduce score
+  - Vessel preparing for a long voyage → increase score  
+Engine adjusts automatically.
+
+#### **7️⃣ Recently Bunkered Filter**
+- Overrides all scoring and marks vessel as **Not a Lead**.
+
+---
+
+### **🏁 Engine Output Categories**
+
+- **High Potential — Upcoming Bunker Need**
+- **Medium Potential — Monitor**
+- **Recently Bunkered — Excluded**
+- **Not a Lead — Low Priority**
+
+This system allows traders to focus immediately on vessels with the highest probability of needing bunkers.
+
+---
+
+# 🗂 Dashboard Components
+
+### **1️⃣ Port-Level Opportunity Summary**
+Summarizes:
+- Total opportunities  
+- Recently bunkered vessels  
+- Opportunity distribution by port or region  
+
+---
+
+### **2️⃣ Upcoming Bunker Opportunities**
+Detailed table including:
 - Vessel characteristics  
-- ETA to destination port  
-- Last bunker port + date  
+- ETA and destination  
+- Last bunker date and port  
 - Days since last bunker  
+- Opportunity classification  
+- High Potential indicators  
 - Compliance alerts  
-- High potential indicators  
-
-### **3. Possible Bunker Locations**
-Forecasts potential ports where vessels may seek bunkers soon.
-
-### **4. Historic STS Operations**
-Shows:
-- Bunker dates  
-- Transfer activity  
-- Vessel operators  
-- Commodity & cargo details  
-(Sensitive data blurred in screenshot.)
 
 ---
 
-## 🛠 Tools & Technologies
+### **3️⃣ Possible Bunker Locations**
+Predicts which ports are likely to be considered by vessels soon.
+
+---
+
+### **4️⃣ Historic STS Operations**
+Displays synthetic, safe STS data including:
+- Operation dates  
+- Vessel types  
+- Cargo types  
+- Operators  
+Sensitive real-world identifiers are blurred.
+
+---
+
+# 🛠 Tools & Technologies
 
 - **Power BI Desktop**
-- **DAX** (date interval logic, scoring algorithms, custom flags)
-- **Power Query (M)** (data cleanup)
-- **Geographic & maritime datasets** (masked for privacy)
+- **Power Query (M)** – data transformation
+- **DAX** – scoring logic, date intervals, custom KPIs
+- **Synthetic & blurred datasets** (for portfolio safety)
+- **Maritime domain logic** (ETA, bunker cycles, STS activity)
 
 ---
 
-## ✔ Notes
+# ✔ Notes
 
-- All identifying vessel and operator information has been blurred for confidentiality.  
-- This dashboard is shown for **portfolio demonstration** and does not include the underlying dataset.  
-- The structure reflects real-world maritime analytics models used in bunker trading.  
+- All vessel names, IMOs, operators, and dates are **blurred** for confidentiality.  
+- Underlying operational data is not included due to sensitivity and volume.  
+- This dashboard is a **representation** of an analytical model used in maritime/bunkering workflows.  
+- The scoring logic is simplified for portfolio clarity while demonstrating strong analytical capability.
+
