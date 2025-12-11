@@ -51,22 +51,22 @@ I build BI solutions that balance **technical rigor with business usability**. D
 
 ---
 
-## 1️⃣ **Account Rotation (3+3) – Customer Engagement Model**
+## 1️⃣ **Account Rotation (X+X) – Customer Engagement Model**
 
 **Challenge:**  
 Sales teams lacked a structured way to identify inactive or declining accounts and distribute trader workload based on engagement trends.
 
 **Solution:**  
-A Power BI model evaluating customer activity across 3-month enquiry and deal windows. Accounts are classified as:  
+A Power BI model evaluating customer activity across X-month enquiry and deal windows. Accounts are classified as:  
 **Healthy**, **Rotatable**, **At Risk**, or **Reassigned** — with automated alerts and workload insights.
 
 **Technical Highlights:**
 - Complex engagement scoring using CALCULATE, FILTER, and time intelligence
-- Handles 6,000+ accounts with dynamic classification logic  
+- Handles 2,000+ accounts with dynamic classification logic  
 - Star schema enabling multi-trader, multi-office views
 
 **Impact:**  
-Reduced manual account review from **8 hours to 15 minutes weekly**, improving retention follow-up strategies.
+Reduced manual account review from **6 hours to 20 minutes weekly**, improving retention follow-up strategies.
 
 🔗 **View Project:**  
 [account-rotation-3plus3](./account-rotation-3plus3)
@@ -106,7 +106,6 @@ A Power BI dashboard tracking **running utilization**, **allocation limits**, **
 **Technical Highlights:**
 - Star schema with fiscal calendar and counterparty hierarchies  
 - DAX for running totals, rolling forecasts, and variance analysis  
-- Python-backed time-series projections (optional)
 
 **Impact:**  
 Helped prevent **3–5 potential cash shortfalls per quarter** through proactive monitoring and alerts.
