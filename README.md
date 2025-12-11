@@ -1,5 +1,17 @@
 # 👋 Hi, I'm Zia — Data Strategy & Insights Analyst | Power BI Developer
 
+## ⚙️ Skills & Tools
+
+<p align="left">
+  <img src="https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=Power%20BI&logoColor=black"/>
+  <img src="https://img.shields.io/badge/DAX-0A0A0A?style=for-the-badge&logo=microsoft&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Power%20Query-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white"/>
+  <img src="https://img.shields.io/badge/ETL-4B8BBE?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAHpJREFUKBVjZKAQMFKon4GB4T8DA8P/fxj4D8R8GcS0AxGYEhEGhGJJP4PxfwT8jwP5PxgYGBg+GfgfE8U9iPxH4U2EEUMzAwPDfz///8/kUgKQMyAkgxEYEhGJFIg4g8QEwmEFA8n8D8TwiYQ1AMQ0HwPxfwfzPwPxPw/xb0gYQIAxqgQFz1+/YAAAAASUVORK5CYII&logoColor=white"/>
+</p>
+
 Welcome to my analytics portfolio.  
 I specialize in transforming raw data into clear, actionable insights using **Power BI, DAX, Power Query, Python, and SQL**.  
 My work focuses on solving real business problems across Trading, Finance, Operations, and CRM by building scalable, automated, and data-driven reporting solutions.
