@@ -605,6 +605,6 @@ The DAX code and data model documentation demonstrate the technical approach and
 
 ## 📬 Contact
 
-**Muhammad Zia Ul Haq**  
+**Zia Malik**  
 📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
 🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
