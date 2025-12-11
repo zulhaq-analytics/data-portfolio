@@ -78,10 +78,10 @@ This helps managers balance workload and monitor trader performance.
 The dashboard includes an alerting mechanism that highlights accounts requiring immediate trader action.  
 Alerts are triggered based on account activity timelines and health indicators, including:
 
-- **Accounts approaching rotation** (no activity within the last 60–90 days)
-- **Accounts overdue for rotation** (90+ days without activity)
+- **Accounts approaching rotation** (no activity within the last XX–XX days)
+- **Accounts overdue for rotation** (XX+ days without activity)
 - **At-Risk accounts** showing declining engagement or reduced deal volume
-- **Accounts with no enquiries or deals across both 3-month windows**
+- **Accounts with no enquiries or deals across both X-month windows**
 - **New accounts requiring onboarding follow-up**
 
 Each alert includes a recommended action such as:
