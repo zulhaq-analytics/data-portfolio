@@ -32,22 +32,26 @@ This framework solves the most common challenges BI teams face as they grow:
 
 ## 🏗️ Implementation Roadmap
 
-### **Phase 1 — Foundation (Week 1–2)**
+### Phase 1 — Foundation (Week 1–2)
+
 - Apply naming conventions to new datasets and models  
 - Adopt DAX formatting & performance patterns  
 - Build data dictionaries for high-impact existing reports  
 
-### **Phase 2 — Security (Week 3–4)**
+### Phase 2 — Security (Week 3–4)
+
 - Audit all existing RLS implementations  
 - Standardize dynamic RLS and role structures  
 - Document workspace access matrix  
 
-### **Phase 3 — Governance (Month 2)**
+### Phase 3 — Governance (Month 2)
+
 - Introduce code review workflow  
 - Implement report certification process  
 - Configure refresh monitoring and SLA alerts  
 
-### **Phase 4 — Enablement (Ongoing)**
+### Phase 4 — Enablement (Ongoing)
+
 - Conduct team training on standards  
 - Quarterly governance reviews  
 - Continuous improvement based on user feedback  
