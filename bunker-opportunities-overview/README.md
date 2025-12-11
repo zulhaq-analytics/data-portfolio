@@ -1,7 +1,7 @@
 ## 📊 Dashboard Preview
 
 <p align="center">
-  <img src="possible-bunker-opportunities.png" width="1200">
+  <img src="possible-bunker-opportunities.png" width="1500">
 </p>
 <p align="center"><i>Dashboard preview with sensitive vessel and operator details blurred for confidentiality.</i></p>
 
