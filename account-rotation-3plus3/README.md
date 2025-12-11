@@ -716,6 +716,6 @@ This project is for **portfolio demonstration only**. All customer names, trader
 
 ## 📬 Contact
 
-**Muhammad Zia Ul Haq**  
+**Zia Malik**  
 📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
 🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
