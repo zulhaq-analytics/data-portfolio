@@ -587,3 +587,11 @@ This dashboard demonstrates:
 - **Time-windowed measures** (90-day projection) for focused forecasting
 
 The model transforms raw deal data into actionable liquidity intelligence, enabling finance teams to anticipate cash needs rather than react to shortfalls.
+
+---
+
+## 📬 Contact
+
+**Zia Malik**  
+📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
