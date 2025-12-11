@@ -1,8 +1,3 @@
-<p align="center">
-  <!-- Replace banner.png with your actual banner file name -->
-  <img src="banner.png" width="100%" alt="Zia - Data Strategy & Insights Analyst">
-</p>
-
 # 👋 Hi, I'm Zia — Data Strategy & Insights Analyst | Power BI Developer
 
 Welcome to my analytics portfolio.  
