@@ -1,211 +1,610 @@
+# Bunker Opportunities Overview – Vessel Activity & Demand Forecasting
+
+A Power BI maritime intelligence dashboard that identifies potential bunker sales opportunities by analyzing vessel movements, ETA forecasts, historical STS (Ship-to-Ship) operations, and bunker cycle patterns. Features a custom **High Potential Engine** that dynamically scores vessels based on their likelihood to require bunkers.
+
+---
+
 ## 📊 Dashboard Preview
 
 <p align="center">
   <img src="possible-bunker-opportunities.png" width="1200">
 </p>
-<p align="center"><i>Dashboard preview with sensitive vessel and operator details blurred for confidentiality.</i></p>
+<p align="center"><i>Dashboard showing vessel arrivals forecast, bunker opportunities by port, and STS operation history. Sensitive vessel and operator details redacted for confidentiality.</i></p>
 
 ---
 
-# Bunker Opportunities Overview – Vessel Activity & Potential Demand Analysis
+## 🏢 Business Context
 
-This dashboard identifies **potential bunker opportunities** by analyzing vessel activity, estimated arrival dates, last bunker history, and historical STS operations.  
-All vessel names, IMOs, operators, and sensitive fields in this preview have been **blurred or anonymized**.
+In the bunker trading industry, timing is everything. Vessels need fuel at specific points in their voyages, and traders who can anticipate these needs gain a significant competitive advantage. The challenge: **How do you predict which vessels will need bunkers and when, across thousands of vessels and dozens of ports?**
 
----
+This dashboard solves that by:
 
-## 🎯 Purpose of the Model
-
-The analytics model helps commercial and trading teams:
-
-- Detect **vessels likely to require bunkers soon**
-- Identify **recently bunkered vessels**
-- Forecast **upcoming vessel arrivals**
-- Prioritize high-potential commercial leads
-- Analyze **historical STS operations**
-- Generate **proactive alerts for traders**
-- Provide a focused, high-quality **opportunity pipeline**
-
-The goal is to improve proactive outreach and increase bunker conversion rates.
+- Analyzing **historical STS bunkering patterns** to establish baseline consumption cycles per vessel type
+- Tracking **real-time vessel positions and ETAs** to identify upcoming arrivals at bunker ports
+- Calculating **days since last bunker** to flag vessels approaching refueling needs
+- Scoring opportunities using a **dynamic threshold engine** that adapts to each vessel type's typical bunker interval
+- Enabling **proactive outreach** before customers even send enquiries
 
 ---
 
-## 📈 Key Metrics
+## 🎯 What This Dashboard Delivers
 
-- **Potential Bunker Opportunities**
-- **Recently Bunkered Vessels**
-- **Upcoming Arrivals – Next XX Days**
-- **Days Since Last Bunker**
-- **High Potential Flags**
-- **Confidence Level / Source**
-- **Commodity & Grade Summary**
-
----
-
-# 🧠 Opportunity Identification Logic (Simplified Overview)
-
-The model determines bunker demand likelihood using several factors:
-
-### **1️⃣ Last Bunker Date Logic**
-- Evaluates typical bunker cycles  
-- Adjusts based on vessel class and DWT  
-- Flags vessels approaching expected bunker intervals  
-
-### **2️⃣ Destination-Based Prediction**
-- High-bunkering ports (e.g., Singapore, Fujairah, Rotterdam) increase probability  
-- Non-bunker ports decrease probability  
-
-### **3️⃣ Vessel Type Consumption Profile**
-Fuel consumption varies widely:
-- High burn → Tanker, Container, VLCC  
-- Low burn → Bulk Carrier, LPG  
-
-### **4️⃣ STS Operation History**
-Recent STS events can indicate:
-- Recent bunker uplift  
-- Preparation for onward long-haul movement  
-
-### **5️⃣ Recently Bunkered Filter**
-Realistically excludes vessels that bunkered recently.
+| Stakeholder | Value |
+|-------------|-------|
+| **Traders** | Prioritized list of vessels likely to need bunkers, filtered to their customer portfolio |
+| **Operations** | Upcoming vessel arrivals with ETA forecasts for port planning |
+| **Commercial** | Historical STS data to understand customer bunkering patterns |
+| **Management** | Portfolio-wide view of opportunity pipeline by port and trader |
 
 ---
 
-# ⭐ High Potential Engine – How It Works
+## 🗂 Data Model
 
-The **High Potential Engine** is a custom scoring model that ranks vessels by their likelihood to require bunkers soon.
+```
+┌─────────────────────────┐
+│         IMOs            │ ◄─── Central vessel dimension (unique IMO numbers)
+│─────────────────────────│
+│ IMO (PK)                │
+│ High Potential Flag*    │───────────────────────────────────┐
+│ Vessel Type*            │                                   │
+│ Trader*                 │──────────┐                        │
+│ Next Arrival Date*      │          │                        │
+│ Days Since Last Bunker* │          │                        ▼
+│ Last Bunker Date*       │          │         ┌─────────────────────────┐
+│ Last Bunker Port*       │          │         │  Dynamic_Thresholds     │
+└──────────┬──────────────┘          │         │─────────────────────────│
+           │                         │         │ Receiving Vessel Type   │
+    ┌──────┴───────┐                 │         │ Avg Interval**          │
+    │              │                 │         └─────────────────────────┘
+    ▼              ▼                 │
+┌─────────────────┐  ┌─────────────┐ │    ┌─────────────────────────┐
+│Possible_Bunker_ │  │  STS_Table  │ │    │  Sales Trader Managers  │
+│     Calls       │  │─────────────│ │    │─────────────────────────│
+│─────────────────│  │Op Start Date│ │    │ Dynamics User Name      │
+│ Vessel Name     │  │Op End Date  │ │    │ Sales Trader            │
+│ IMO             │  │Bunker Port  │ └───►│ Role                    │
+│ Current Location│  │Receiving    │      │ Manager                 │
+│ Destination Port│  │ Vessel IMO  │      │ Team                    │
+│ Destination ETA │  │Receiving    │      └─────────────────────────┘
+│ Last Bunker Date│  │ Vessel Type │
+│ Last Bunker Port│  │Days Between │
+│ Operator        │  │ STS*        │
+│ Vessel Type     │  │Supply Vessel│
+│ DWT (mt)        │  │ Operator    │
+│ Probable Status │  └─────────────┘
+│ Commodity       │
+│ Compliance Alert│        ┌─────────────────────────┐
+└────────┬────────┘        │    Mapping_Table        │
+         │                 │─────────────────────────│
+         │                 │ Customer Key            │
+         ▼                 │ Customer Name           │
+┌─────────────────┐        │ MINT Name               │◄── Links Operators
+│ Calendar Table  │        │ Trader                  │    to Customers
+│─────────────────│        └─────────────────────────┘
+│ Date (PK)       │
+│ Year / Month    │        ┌─────────────────────────┐
+│ Quarter / Week  │        │   Port Country Region   │
+└─────────────────┘        │─────────────────────────│
+                           │ Port                    │
+* Calculated columns       │ Country                 │
+** Calculated table        │ Region                  │
+                           └─────────────────────────┘
+```
 
-### **What the Engine Evaluates**
+### Relationships
 
-#### **1️⃣ Days Since Last Bunker**
-- Compares time passed with expected bunker cycle per vessel type  
-
-#### **2️⃣ Destination Port Analysis**
-- High-demand ports increase scoring  
-- Long voyages without bunker events increase scoring further  
-
-#### **3️⃣ ETA Forecast**
-- Vessels arriving in the next **X–XX days** receive priority  
-
-#### **4️⃣ Consumption Model by Vessel Type**
-- Faster consumption → faster increase in potential  
-
-#### **5️⃣ Compliance & Alert Flags**
-- Operational anomalies affect scoring  
-
-#### **6️⃣ STS Event Detection**
-- Recent STS → adjust scoring depending on context  
-
-#### **7️⃣ Recently Bunkered Filter**
-- Overrides everything → marks “Not a Lead”
+| From Table | From Column | To Table | To Column | Notes |
+|------------|-------------|----------|-----------|-------|
+| Possible_Bunker_Calls | IMO | IMOs | IMO | Bi-directional |
+| STS_Table | Receiving Vessel IMO | IMOs | IMO | |
+| IMOs | Trader | Sales Trader Managers | Sales Trader | |
+| Possible_Bunker_Calls | Operator | Mapping_Table | MINT Name | Customer lookup |
+| Possible_Bunker_Calls | Indicated Destination Date | Calendar Table | Date | |
+| Possible_Bunker_Calls | Indicated Destination Port | Port Country Region | Port | |
 
 ---
 
-### **🏁 Engine Output Categories**
+## ⭐ High Potential Engine – The Core Scoring Logic
 
-- **High Potential — Upcoming Bunker Need**
-- **Medium Potential — Monitor**
-- **Recently Bunkered — Excluded**
-- **Not a Lead — Low Priority**
+The **High Potential Engine** is a custom scoring model that ranks vessels by their likelihood to require bunkers soon. It uses **dynamic thresholds** calculated from historical STS data rather than static rules.
+
+### How Dynamic Thresholds Work
+
+The system calculates average bunker intervals per vessel type from historical STS operations:
+
+```dax
+// Dynamic_Thresholds (Calculated Table)
+ADDCOLUMNS(
+    SUMMARIZE(
+        'STS_Table',
+        'STS_Table'[Receiving Vessel Type]
+    ),
+    "Avg Interval",
+        AVERAGEX(
+            FILTER(
+                'STS_Table',
+                'STS_Table'[Receiving Vessel Type]
+                    = EARLIER('STS_Table'[Receiving Vessel Type])
+                    && NOT ISBLANK('STS_Table'[Days Between STS])
+            ),
+            'STS_Table'[Days Between STS]
+        ) * 0.75   // Reduces interval by 25% to account for incomplete STS data
+)
+```
+
+### High Potential Flag (Calculated Column on IMOs)
+
+```dax
+High Potential Flag = 
+VAR _Type = 'IMOs'[Vessel Type]
+VAR _Next = 'IMOs'[Next Arrival Date]
+VAR _Days = 'IMOs'[Days Since Last Bunker]
+
+-- Dynamic threshold lookup from historical STS data
+VAR _Threshold =
+    LOOKUPVALUE(
+        'Dynamic_Thresholds'[Avg Interval],
+        'Dynamic_Thresholds'[Receiving Vessel Type], _Type
+    )
+
+RETURN
+SWITCH(
+    TRUE(),
+    (
+        ISBLANK(_Next)
+            && _Days > _Threshold * 1.5
+    )
+        || (
+            NOT ISBLANK(_Next)
+            && _Next <= TODAY() + 14
+            && (ISBLANK(_Days) || _Days > _Threshold)
+        ),
+    "🟢 Upcoming Bunker Need",
+    "🔴 Recently Bunkered"
+)
+```
+
+### Classification Logic Explained
+
+| Flag | Condition |
+|------|-----------|
+| **🟢 Upcoming Bunker Need** | Vessel arriving within 14 days AND days since last bunker exceeds type-specific threshold, OR no ETA but significantly overdue (1.5x threshold) |
+| **🔴 Recently Bunkered** | Vessel bunkered recently relative to its type's normal interval |
 
 ---
 
-# 🚨 Vessel Alerts – Upcoming Bunkering Signals
+## 🔧 Key DAX Calculations
 
-The dashboard includes an alerting mechanism that automatically flags vessels requiring attention.
+### Days Between STS (Calculated Column on STS_Table)
 
-Alerts are triggered when:
+Calculates the interval between consecutive bunkering events for each vessel:
 
-- A vessel is **approaching its typical bunker interval**
-- ETA to a major bunker port is within **X–XX days**
-- The vessel has **no recent bunker history**
-- Recent **STS activity** suggests increased consumption
-- A vessel’s fuel pattern deviates from expected cycles
+```dax
+Days Between STS = 
+VAR _IMO = 'STS_Table'[Receiving Vessel IMO]
+VAR _Date = 'STS_Table'[Operation Start Date]
+VAR _PrevDate =
+    CALCULATE(
+        MAX('STS_Table'[Operation Start Date]),
+        FILTER(
+            'STS_Table',
+            'STS_Table'[Receiving Vessel IMO] = _IMO
+                && 'STS_Table'[Operation Start Date] < _Date
+        )
+    )
+RETURN
+IF(NOT ISBLANK(_PrevDate),
+    DATEDIFF(_PrevDate, _Date, DAY)
+)
+```
+
+### Days Since Last Bunker (Calculated Column on IMOs)
+
+```dax
+Days Since Last Bunker = 
+IF (
+    NOT ISBLANK ( [Last Bunker Date] ),
+    DATEDIFF ( [Last Bunker Date], TODAY(), DAY )
+)
+```
+
+### Last Bunker Date (Calculated Column on IMOs)
+
+Combines data from both PBC (Possible Bunker Calls) and STS sources, taking the most recent:
+
+```dax
+Last Bunker Date = 
+VAR _DatePBC = IMOs[Last Bunker Date PBC]
+VAR _DateSTS = IMOs[Last Bunker Date STS]
+RETURN
+    IF (
+        _DatePBC > _DateSTS,
+        _DatePBC,
+        _DateSTS
+    )
+```
+
+### Next Arrival Date (Calculated Column on IMOs)
+
+```dax
+Next Arrival Date = 
+VAR _IMO = 'IMOs'[IMO]
+RETURN
+CALCULATE (
+    MIN ( 'Possible_Bunker_Calls'[Indicated Destination Date] ),
+    FILTER (
+        'Possible_Bunker_Calls',
+        'Possible_Bunker_Calls'[IMO] = _IMO
+            && 'Possible_Bunker_Calls'[Indicated Destination Date] >= TODAY()
+    )
+)
+```
+
+### Trader Assignment (Calculated Column on IMOs)
+
+Links vessels to traders via operator-customer mapping:
+
+```dax
+Trader = 
+VAR _OperatorPBC =
+    CALCULATE (
+        MAX ( 'Possible_Bunker_Calls'[Operator] ),
+        FILTER ( 'Possible_Bunker_Calls', 'Possible_Bunker_Calls'[IMO] = 'IMOs'[IMO] )
+    )
+VAR _TraderPBC =
+    LOOKUPVALUE (
+        'Mapping_Table'[Trader],
+        'Mapping_Table'[MINT Name], _OperatorPBC
+    )
+
+VAR _OperatorSTS =
+    CALCULATE (
+        MAX ( 'STS_Table'[Receiving Vessel Operator] ),
+        FILTER ( 'STS_Table', 'STS_Table'[Receiving Vessel IMO] = 'IMOs'[IMO] )
+    )
+VAR _TraderSTS =
+    LOOKUPVALUE (
+        'Mapping_Table'[Trader],
+        'Mapping_Table'[MINT Name], _OperatorSTS
+    )
+
+VAR _FinalTrader =
+    COALESCE ( _TraderPBC, _TraderSTS )
+
+RETURN
+IF ( ISBLANK ( _FinalTrader ), "Unassigned", _FinalTrader )
+```
+
+### Cumulative Vessel Arrivals (Measure)
+
+For the arrivals trend chart:
+
+```dax
+Cumulative Vessel Arrivals = 
+VAR _maxDate = MAX ( 'Calendar Table'[Date] )
+RETURN
+CALCULATE (
+    [Vessel Arrivals],
+    FILTER (
+        ALLSELECTED ( 'Calendar Table'[Date] ),
+        'Calendar Table'[Date] <= _maxDate
+    )
+)
+```
+
+---
+
+## 📊 Dashboard Components
+
+### 1️⃣ KPI Cards
+- **🟢 Potential Bunker Opportunities** — Count of vessels flagged as "Upcoming Bunker Need"
+- **🔴 Recently Bunkered** — Count of vessels that bunkered recently
+- **🚨 Active Alerts** — Count of vessels requiring trader attention (High/Medium/Low priority)
+
+### 2️⃣ Port Summary Matrix
+Breakdown by destination port showing:
+- Potential opportunities count
+- Recently bunkered count
+- Toggle between Port view and Trader view
+
+### 3️⃣ Upcoming Vessel Arrivals Chart
+Area chart showing cumulative vessel arrivals over the next 30 days, helping operations plan for upcoming demand.
+
+### 4️⃣ Upcoming Bunker Opportunities Table
+Detailed vessel list including:
+- Trader, IMO, Vessel Name, Operator
+- Current Location → Destination Port
+- Destination ETA
+- Last Bunker Date & Port
+- Status (Ballast/Laden)
+- Days Since Last Bunker
+- Compliance Alert
+- **High Potential Flag** (🟢/🔴)
+- **Alert Priority** (🔴/🟠/🟡) — with conditional formatting
+
+### 5️⃣ Possible Bunker Locations
+Predicted bunkering ports based on vessel routes:
+- Bunker EDA (Estimated Date of Arrival)
+- Vessel Type, DWT
+- Intelligence Confidence level
+- Commodity being carried
+
+### 6️⃣ Historic STS Operations
+Historical bunkering activity showing:
+- Bunker Date & Port
+- Vessel Name & IMO
+- Operator
+- Supply Vessel details
+
+### 7️⃣ Trader Alert Summary (Manager View)
+Matrix showing alert distribution across traders:
+- High/Medium/Low priority counts per trader
+- Unassigned vessels requiring attention
+- Helps managers balance workload and ensure coverage
+
+---
+
+## 🔒 Row-Level Security (RLS)
+
+RLS ensures data confidentiality and personalized insights aligned with real-world operational access levels.
+
+### Access Matrix
+
+| Role | Customers | Vessels | Opportunities | Alerts |
+|------|-----------|---------|---------------|--------|
+| **Trader** | Own customers only | Vessels linked to own customers + Unassigned | Own portfolio only | Receives personal alerts |
+| **Manager** | All team customers | All team vessels + Unassigned | Team-wide view | Team alerts summary |
+| **Leadership** | All customers | All vessels | Full pipeline | All alerts |
+
+### RLS Implementation
+
+**Role: Trader**
+```dax
+// Filter on Sales Trader Managers table
+[Email] = USERPRINCIPALNAME()
+```
+
+**Role: Manager**
+```dax
+// Filter on Sales Trader Managers table - sees own + team members
+[Email] = USERPRINCIPALNAME()
+    || [Manager Email] = USERPRINCIPALNAME()
+```
+
+**Role: Leadership**
+```dax
+// No filter applied - full access
+// Alternatively, filter by role:
+[Role] = "Leadership"
+    || LOOKUPVALUE(
+        'Sales Trader Managers'[Role],
+        'Sales Trader Managers'[Email], USERPRINCIPALNAME()
+    ) = "Leadership"
+```
+
+### Vessel Filtering Logic
+
+Since vessels connect to traders via the `Trader` calculated column on IMOs (which maps operators to customers to traders), RLS automatically flows through the model:
+
+```
+Sales Trader Managers (RLS Filter)
+        │
+        ▼
+      IMOs[Trader]
+        │
+        ▼
+   Possible_Bunker_Calls
+        │
+        ▼
+   All related visuals
+```
+
+Unassigned vessels (where `Trader = "Unassigned"`) are visible to all roles to ensure no opportunities are missed.
+
+---
+
+## 🚨 Alert System – Proactive Trader Notifications
+
+The dashboard includes an alerting mechanism that flags vessels requiring immediate trader attention, enabling proactive outreach before customers send enquiries.
+
+### Alert Categories
+
+| Alert Level | Trigger Condition | Action Required |
+|-------------|-------------------|-----------------|
+| 🔴 **High Priority** | Vessel arriving within 7 days AND days since last bunker > 1.5x threshold | Contact customer immediately |
+| 🟠 **Medium Priority** | Vessel arriving within 14 days AND days since last bunker > threshold | Prepare follow-up, monitor |
+| 🟡 **Low Priority** | Vessel arriving within 30 days AND approaching bunker threshold | Optional follow-up |
+
+### Alert Priority (Calculated Column on IMOs)
+
+```dax
+Alert Priority = 
+VAR _Days = [Days Since Last Bunker]
+VAR _ArrivalDays = DATEDIFF(TODAY(), [Next Arrival Date], DAY)
+VAR _Type = [Vessel Type]
+VAR _Threshold = 
+    LOOKUPVALUE(
+        'Dynamic_Thresholds'[Avg Interval],
+        'Dynamic_Thresholds'[Receiving Vessel Type], _Type
+    )
+
+RETURN
+SWITCH(
+    TRUE(),
+    -- High Priority: Arriving soon + significantly overdue
+    _ArrivalDays <= 7 && _Days > _Threshold * 1.5, "🔴 High Priority",
+    
+    -- Medium Priority: Arriving within 2 weeks + overdue
+    _ArrivalDays <= 14 && _Days > _Threshold, "🟠 Medium Priority",
+    
+    -- Low Priority: Arriving within month + approaching threshold
+    _ArrivalDays <= 30 && _Days > _Threshold * 0.8, "🟡 Low Priority",
+    
+    -- No alert needed
+    BLANK()
+)
+```
+
+### Alert Triggers
+
+Alerts are generated when:
+
+- A vessel is **approaching its typical bunker interval** (based on vessel type)
+- ETA to a bunker port is within **7–30 days**
+- The vessel has **no recent bunker history** in either PBC or STS data
+- Recent **STS activity** suggests the vessel is active and consuming fuel
 - A vessel shows **high distance traveled since last bunker**
+- **Compliance alerts** are flagged (sanctions, documentation issues)
 
-Output alert levels:
+### Recommended Action (Calculated Column on IMOs)
 
-- **🔴 High Priority** – Contact customer immediately  
-- **🟠 Medium Priority** – Monitor and prepare follow-up  
-- **🟡 Low Priority** – Optional follow-up  
+```dax
+Recommended Action = 
+VAR _AlertLevel = [Alert Priority]
+VAR _Status = [High Potential Flag]
+VAR _Compliance = 
+    CALCULATE(
+        MAX('Possible_Bunker_Calls'[Compliance Alert]),
+        FILTER('Possible_Bunker_Calls', 'Possible_Bunker_Calls'[IMO] = [IMO])
+    )
 
-These alerts help traders proactively engage customers **before** enquiries arrive.
+RETURN
+SWITCH(
+    TRUE(),
+    NOT ISBLANK(_Compliance), "⚠️ Review compliance before contact",
+    _AlertLevel = "🔴 High Priority", "📞 Contact customer immediately",
+    _AlertLevel = "🟠 Medium Priority", "📧 Send follow-up email",
+    _AlertLevel = "🟡 Low Priority", "👁️ Monitor - add to watchlist",
+    _Status = "🟢 Upcoming Bunker Need", "📋 Prepare quotation",
+    "No action required"
+)
+```
 
----
+### Trader Alert Summary (Measure)
 
-# 🔒 Row-Level Security (RLS)
+For KPI cards showing each trader's alert counts:
 
-RLS ensures that each trader only sees vessels relevant to their portfolio.
+```dax
+High Priority Alerts = 
+COUNTROWS(
+    FILTER(
+        'IMOs',
+        [Alert Priority] = "🔴 High Priority"
+    )
+)
 
-### **RLS Rules Implemented**
+Total Active Alerts = 
+COUNTROWS(
+    FILTER(
+        'IMOs',
+        NOT ISBLANK([Alert Priority])
+    )
+)
+```
 
-- **Traders** see:
-  - Vessels linked to their customer list  
-  - Vessels flagged as “Unassigned”  
-  - Vessel opportunities only in their managed ports  
+### Alert Distribution by Trader (Visual)
 
-- **Managers** see:
-  - All vessels under their team’s customers  
-  - All team opportunity alerts  
+A matrix showing alert counts per trader helps managers balance workload:
 
-- **Leadership** sees:
-  - All vessels and all opportunity pipelines  
-
-### **Technical Implementation**
-- Trader dimension table with unique user mapping  
-- Customer–vessel relationship mapping  
-- DAX-based security filters  
-- Port-level filtering for geography-specific teams  
-
-This ensures data confidentiality and aligns the report with real-world operational access.
-
----
-
-# 🗂 Dashboard Components
-
-### **1️⃣ Port-Level Opportunity Summary**
-Summarizes:
-- Total opportunities  
-- Recently bunkered vessels  
-- Opportunity distribution by port or region  
-
----
-
-### **2️⃣ Upcoming Bunker Opportunities**
-Includes:
-- Vessel characteristics  
-- ETA and destination  
-- Last bunker date and port  
-- High potential scoring  
-- Alert level (High, Medium, Low)  
-
----
-
-### **3️⃣ Possible Bunker Locations**
-Predicts suitable bunkering ports based on sector patterns.
+| Trader | 🔴 High | 🟠 Medium | 🟡 Low | Total |
+|--------|---------|-----------|--------|-------|
+| Trader A | 3 | 7 | 12 | 22 |
+| Trader B | 1 | 4 | 8 | 13 |
+| Unassigned | 5 | 11 | 24 | 40 |
 
 ---
 
-### **4️⃣ Historic STS Operations**
-Displays synthetic, anonymized STS activity:
-- Dates  
-- Cargo types  
-- Vessel classes  
+## 🛠 Technical Stack
+
+| Component | Technology |
+|-----------|------------|
+| Visualization | Power BI Desktop |
+| Data Sources | S&P Global MINT data, SharePoint Excel files, Power Platform Dataflows |
+| Calculations | DAX (calculated tables, calculated columns, measures) |
+| Data Transformation | Power Query (M) |
+| Date Intelligence | Custom Calendar Table |
+| Security | Row-Level Security |
 
 ---
 
-# 🛠 Tools & Technologies
+## 💡 Design Decisions
 
-- **Power BI Desktop**
-- **Power Query (M)** – data transformation  
-- **DAX** – scoring model, alerts, ETA logic  
-- **Synthetic & blurred datasets**  
-- **Row-Level Security (RLS)**  
-- **Maritime consumption logic**  
+**1. Why Dynamic Thresholds instead of static rules?**  
+Different vessel types have vastly different consumption patterns. A VLCC burns fuel at a different rate than an LPG carrier. Using historical STS data to calculate type-specific intervals is more accurate than one-size-fits-all rules.
+
+**2. Why 0.75 multiplier on average intervals?**  
+STS data doesn't capture all bunkering events (some occur at ports rather than ship-to-ship). Reducing the threshold by 25% creates a more conservative estimate that catches opportunities earlier.
+
+**3. Why combine PBC and STS data for Last Bunker Date?**  
+Different data sources capture different bunkering events. Taking the most recent date from either source gives the most complete picture.
+
+**4. Why bi-directional filtering on IMOs ↔ Possible_Bunker_Calls?**  
+Enables slicers on vessel details to filter the arrivals chart and vice versa, creating a cohesive interactive experience.
+
+**5. Why "Unassigned" as default trader?**  
+Ensures no vessel falls through the cracks. Unassigned vessels represent potential new business that any trader can pursue.
+
+**6. Why three-tier alert priority (High/Medium/Low)?**  
+Not all opportunities are equally urgent. A vessel arriving tomorrow that's overdue for bunkers needs immediate action, while one arriving in 3 weeks can be added to a watchlist. The tiered system helps traders prioritize their daily workflow.
+
+**7. Why alert thresholds use multipliers (1.5x, 1.0x, 0.8x)?**  
+These multipliers create meaningful differentiation:
+- 1.5x threshold = significantly overdue, high urgency
+- 1.0x threshold = at expected interval, moderate urgency  
+- 0.8x threshold = approaching interval, early warning
 
 ---
 
-# ✔ Notes
+## 🔄 Optional: Power Automate Integration
 
-- All vessel names, IMOs, operators, and dates are **blurred** for confidentiality.  
-- Operational datasets are not included due to sensitivity and size.  
-- This dashboard demonstrates maritime analytics, forecasting, and opportunity scoring.  
+For proactive notifications beyond the dashboard, the alert system can be extended with Power Automate:
+
+### Daily Alert Email to Traders
+```
+Trigger: Scheduled (daily at 8:00 AM)
+Action: 
+  1. Query Power BI dataset for High Priority alerts per trader
+  2. Send personalized email to each trader with their alert list
+  3. Include vessel name, ETA, days since last bunker, recommended action
+```
+
+### Teams Notification for High Priority
+```
+Trigger: Data-driven alert when High Priority count > threshold
+Action:
+  1. Post to Trading Team channel
+  2. Include vessel details and customer contact info
+  3. Tag assigned trader for immediate attention
+```
+
+This creates a proactive workflow where traders receive alerts without needing to open the dashboard.
+
+---
+
+## 📁 Repository Contents
+
+```
+bunker-opportunities-overview/
+├── possible-bunker-opportunities.png   # Dashboard preview (redacted)
+├── README.md
+└── (No .pbix or datasets included due to data sensitivity and size)
+```
+
+---
+
+## ⚠️ Disclaimer
+
+This project is for **portfolio demonstration only**. All vessel names, IMO numbers, operator names, and sensitive details in the screenshot have been redacted or blurred. The actual datasets are not included due to:
+- Confidentiality of maritime intelligence data
+- Large dataset size making dummy data generation impractical
+- Proprietary S&P Global MINT data licensing
+
+The DAX code and data model documentation demonstrate the technical approach and business logic.
+
+---
+
+## 📬 Contact
+
+**Muhammad Zia Ul Haq**  
+📧 [zulhaq@gmail.com](mailto:zulhaq@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/mziamalik)
