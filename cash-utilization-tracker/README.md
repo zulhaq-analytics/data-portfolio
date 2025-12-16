@@ -3,7 +3,7 @@
 **Real-time visibility into trading cash exposure, liquidity forecasting, and collection performance.**
 
 <p align="center">
-  <img src="cash-utilization-screenshot.png" width="1000">
+  <img src="cash-utilization-screen.png" width="1000">
 </p>
 <p align="center"><i>Dashboard preview with sensitive deal information redacted.</i></p>
 
