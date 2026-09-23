@@ -6,7 +6,19 @@ I build analytics end to end: from ingesting raw data to the model and report th
 
 ---
 
-## Flagship project
+## Featured projects
+
+### [U.S. Tariffs & Trade: Cut or Rerouted?](https://github.com/zulhaq-analytics/us-tariffs-trade-fabric)
+
+[![Tariffs and trade report](https://raw.githubusercontent.com/zulhaq-analytics/us-tariffs-trade-fabric/main/docs/screenshots/01_overview.png)](https://github.com/zulhaq-analytics/us-tariffs-trade-fabric)
+
+An end-to-end Microsoft Fabric solution over 23.8 million U.S. Census import records (2010–2026): a resumable API ingestion pipeline, a PySpark medallion Lakehouse reconciled to the dollar, a fixed-effects panel regression, 12-month forecasts with a plausibility guardrail, a source-shift prediction model, and a six-page Power BI report.
+
+**Finding:** the 2025 tariffs did both. Rerouting held roughly steady against the 2018–19 trade war (23.9% → 26.4% of China-exposed import value), but outright cutting more than doubled (13.4% → 28.8%). China fell from about 22% of U.S. imports to about 8%, and when the Supreme Court struck the tariffs down, only 3.2% of that value moved back.
+
+🔗 **[View project →](https://github.com/zulhaq-analytics/us-tariffs-trade-fabric)**
+
+---
 
 ### [U.S. Flight Performance: Pre- vs Post-COVID](https://github.com/zulhaq-analytics/flight-performance-fabric)
 
@@ -38,8 +50,9 @@ Focused write-ups of modeling patterns for common business problems.
 
 ## Skills
 
-**Microsoft Fabric:** Data Factory pipelines, Lakehouse, PySpark, Delta Lake, Direct Lake
+**Microsoft Fabric:** Data Factory pipelines, Lakehouse, PySpark, Delta Lake, Direct Lake, ML experiments (MLflow)
 **Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor
+**Python & statistics:** pandas, scikit-learn, panel regression, time-series forecasting, SHAP
 **Also:** SQL, Excel, SharePoint, Power Automate, Tableau
 
 ## Certifications
