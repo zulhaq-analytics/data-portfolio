@@ -2,7 +2,7 @@
 
 Senior BI & Insights Analyst | Power BI & Microsoft Fabric · Dubai, UAE
 
-I build analytics end to end: from ingesting raw data to the model and report that decision-makers use. 12+ years in data operations and analytics, and PL-300 certified.
+I build analytics end to end: from ingesting raw data to the model and report that decision-makers use. 12+ years in data operations and analytics.
 
 ---
 
