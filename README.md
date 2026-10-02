@@ -45,9 +45,13 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 ## Skills
 
 **Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors)
+
 **Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), SQL
+
 **Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor
+
 **Python & statistics:** pandas, scikit-learn, panel regression, time-series forecasting, SHAP
+
 **Also:** Git and GitHub, Excel, SharePoint, Power Automate, Tableau
 
 ## Certifications
