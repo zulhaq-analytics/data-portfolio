@@ -1,4 +1,4 @@
-# Muhammad Zia Ul Haq — Data Analytics Portfolio
+# Muhammad Zia Ul Haq - Data Analytics Portfolio
 
 Senior Data Analyst | Power BI · Microsoft Fabric · Snowflake · dbt · Dubai, UAE
 
