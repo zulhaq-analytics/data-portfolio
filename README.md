@@ -8,13 +8,15 @@ I build analytics end to end: from ingesting raw data to the model and report th
 
 ## Featured projects
 
-### [Dubai Real Estate Analytics](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt) · *in progress*
+### [Dubai Property Prospectus](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)
 
-A Snowflake and dbt build over 15 Dubai Land Department open datasets (15.4 million rows): role-based warehouse security with key-pair service accounts, a tested dbt project (staging, intermediate and mart layers, 100+ tests, snapshots, daily production runs) and a multi-page Power BI report on prices, rental yields, developer delivery and tenant affordability.
+[![Dubai property report](https://raw.githubusercontent.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt/main/images/the-market.png)](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)
 
-**Early finding:** in 2025, ready homes in Dubai yielded 6.4% gross and 5.4% net of service charges.
+A Snowflake and dbt build over 15 Dubai Land Department open datasets (15.4 million rows): role-based warehouse security with key-pair service accounts, a tested dbt project (staging, intermediate and mart layers, 100+ tests, snapshots, daily production runs), a 12-month Snowflake ML forecast, and an 11-page Power BI report on prices, rental yields, developers, sales speed and financing. Every headline number was reconciled to Snowflake.
 
-🔗 **[View project →](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)**
+**Finding:** 2025 was a record year, with 214,537 sales worth AED 662.7bn, up 19.7%. Ready homes yielded 6.4% gross and 5.4% net of service charges, but new launches are selling more slowly: 77% of units sold in the first year, down from 96% for 2022 launches.
+
+🔗 **[View project →](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)** · **[Open the live report →](https://app.powerbi.com/view?r=eyJrIjoiN2FkZTRmYTQtOGY3ZC00YjA4LTg5ZTktZTY0MjY3NjVkMTc0IiwidCI6ImEyYjYxNTdiLWZlM2ItNGRlZi05OTAzLTc4YTRlMmU5NTNhYiJ9)**
 
 ---
 
@@ -44,7 +46,7 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 
 ## Skills
 
-**Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors)
+**Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML)
 
 **Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), SQL
 
