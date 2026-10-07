@@ -1,12 +1,24 @@
 # Muhammad Zia Ul Haq - Data Analytics Portfolio
 
-Senior Data Analyst | Power BI · Microsoft Fabric · Snowflake · dbt · Dubai, UAE
+Senior Data Analyst | Power BI · Microsoft Fabric · Snowflake · dbt · BigQuery · Dubai, UAE
 
 I build analytics end to end: from ingesting raw data to the model and report that decision-makers use. 12+ years in data operations and analytics. Every project below uses public data, so the code, data and reports can all be checked.
 
 ---
 
 ## Featured projects
+
+### [Customer Lookbook: Who Buys, Who Stays and Who's Leaving at H&M](https://github.com/zulhaq-analytics/fashion-customer-analytics-bigquery)
+
+[![H&M customer report](https://raw.githubusercontent.com/zulhaq-analytics/fashion-customer-analytics-bigquery/main/images/01-who-they-are.png)](https://github.com/zulhaq-analytics/fashion-customer-analytics-bigquery)
+
+A Google Cloud build over 31.8 million real H&M purchases by 1.37 million customers: a BigQuery warehouse, a tested Dataform project (staging, star schema, cohorts, RFM groups and report views, rebuilt monthly on a schedule), two BigQuery ML models that predict who will stop buying and what they will spend, and a seven-page Power BI report with a what-if retention simulator.
+
+**Finding:** the best customers (19% of buyers) bring in 61% of sales, and about half of last year's customers are likely to stop buying in the next 3 months. Targeting the top 10% by sales at risk reaches 32% of it, so a small, focused retention campaign goes a long way.
+
+🔗 **[View project →](https://github.com/zulhaq-analytics/fashion-customer-analytics-bigquery)** · **[Open the live report →](https://app.powerbi.com/view?r=eyJrIjoiNTM2ZjJiMWMtZjQwMy00NDgwLTg0ZjQtN2NiOWNkNTM4ZGJiIiwidCI6ImEyYjYxNTdiLWZlM2ItNGRlZi05OTAzLTc4YTRlMmU5NTNhYiJ9)**
+
+---
 
 ### [Dubai Property Prospectus](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)
 
@@ -46,9 +58,9 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 
 ## Skills
 
-**Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML)
+**Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML), Google BigQuery (BigQuery ML, scheduled workflows)
 
-**Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), SQL
+**Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), Dataform, SQL
 
 **Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor
 
