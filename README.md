@@ -66,7 +66,7 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 
 **Python & statistics:** pandas, scikit-learn, panel regression, time-series forecasting, SHAP
 
-**Also:** Git and GitHub, Excel, SharePoint, Power Automate, Tableau
+**Also:** Git and GitHub, Excel, SharePoint, Power Automate, Tableau, Claude (AI-assisted development)
 
 ## Certifications
 
