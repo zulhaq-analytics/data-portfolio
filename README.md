@@ -1,12 +1,36 @@
-# Muhammad Zia Ul Haq - Data Analytics Portfolio
+# Zia Malik - Data & Analytics Portfolio
 
-Senior Data Analyst | Power BI · Microsoft Fabric · Snowflake · dbt · BigQuery · DuckDB · Dubai, UAE
+Senior Data Analyst | Power BI · Tableau · Microsoft Fabric · Databricks · Snowflake · dbt · BigQuery · DuckDB · Dubai, UAE
 
 I build analytics end to end: from ingesting raw data to the model and report that decision-makers use. 12+ years in data operations and analytics. Every project below uses public data, so the code, data and reports can all be checked.
 
 ---
 
 ## Featured projects
+
+### [The 2026 Oil Supply Shock](https://github.com/zulhaq-analytics/oil-shock-2026-databricks)
+
+[![Oil shock report](https://raw.githubusercontent.com/zulhaq-analytics/oil-shock-2026-databricks/main/images/01-the-shock.png)](https://github.com/zulhaq-analytics/oil-shock-2026-databricks)
+
+A twice-daily Databricks pipeline over about ten public sources (EIA, JODI, IMF PortWatch, FRED, Singapore MPA, CFTC): Python loaders into bronze tables, a tested dbt project into silver and gold, MLflow-tracked models (a Hormuz scenario calculator, a weekly US crude stock nowcast and an 80% range around EIA's outlook), and a nine-page Power BI report that refreshes itself after each run. My own Brent forecast had to beat a simple no-change forecast under a rule set before seeing results; it didn't, so the report uses EIA's outlook instead.
+
+**Finding:** with Hormuz tanker traffic down to about 2% of 2025 levels, Gulf crude output fell about 25% and the rest of the world added only about 1 mb/d. Brent spot rose about 77%, and diesel and jet fuel even more, but in today's dollars Brent is still below its 2008 peak.
+
+🔗 **[View project →](https://github.com/zulhaq-analytics/oil-shock-2026-databricks)** · **[Open the live report →](https://app.powerbi.com/view?r=eyJrIjoiYTRiMzkxZTAtZTc2ZS00N2M1LWE1ODQtYzBmNDJmNzgwNWI5IiwidCI6ImEyYjYxNTdiLWZlM2ItNGRlZi05OTAzLTc4YTRlMmU5NTNhYiJ9)**
+
+---
+
+### [Europe's Power Desk: Where, When and Why Electricity Gets Cheap](https://github.com/zulhaq-analytics/european-power-prices-databricks)
+
+[![European power dashboard](https://raw.githubusercontent.com/zulhaq-analytics/european-power-prices-databricks/main/images/01-market-overview.png)](https://github.com/zulhaq-analytics/european-power-prices-databricks)
+
+A daily Databricks pipeline over seven years of hourly ENTSO-E data for 41 European bidding zones (about 8 GB of raw XML, 47 million rows): a Python API client with retries, rate limiting and per-zone watermarks, a PySpark XML parser that converts every hour to the zone's local time, idempotent Delta Lake MERGE loads, Spark SQL gold tables, and a seven-page Tableau Public dashboard that refreshes every day through Google Sheets. Germany-Luxembourg's yearly averages match published German figures to the cent.
+
+**Finding:** prices across one market are far apart: in 2025, Norway North averaged €9/MWh and Germany-Luxembourg €89. Negative prices are now routine, with 569 hours below zero in Germany-Luxembourg (6.5% of the year, up from 211 in 2019), and solar has made midday power 54% cheaper than the evening peak.
+
+🔗 **[View project →](https://github.com/zulhaq-analytics/european-power-prices-databricks)** · **[Open the live dashboard →](https://public.tableau.com/views/EuropesPowerDesk/MarketOverview)**
+
+---
 
 ### [Customer Lookbook: Who Buys, Who Stays and Who's Leaving at H&M](https://github.com/zulhaq-analytics/fashion-customer-analytics-bigquery)
 
@@ -58,15 +82,17 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 
 ## Skills
 
-**Cloud data platforms:** Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML), Google BigQuery (BigQuery ML, scheduled workflows), DuckDB (local warehouse, Parquet export)
+**Cloud data platforms:** Databricks (Unity Catalog, Delta Lake, PySpark, Spark SQL, scheduled jobs, MLflow, Git folders), Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML), Google BigQuery (BigQuery ML, scheduled workflows), DuckDB (local warehouse, Parquet export)
 
 **Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), Dataform, SQL
 
 **Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor, gateway scheduled refresh
 
+**Tableau:** Tableau Public dashboards with daily data sync, parameter-driven pages, map flow lines
+
 **Python & statistics:** pandas, REST API ingestion, scikit-learn, panel regression, time-series forecasting, SHAP
 
-**Also:** Git and GitHub, Excel, SharePoint, Power Automate, Tableau, Claude (AI-assisted development)
+**Also:** Git and GitHub, Excel, SharePoint, Power Automate, Google Sheets API, Claude (AI-assisted development)
 
 ## Certifications
 
