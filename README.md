@@ -48,7 +48,7 @@ A Google Cloud build over 31.8 million real H&M purchases by 1.37 million custom
 
 [![Dubai property report](https://raw.githubusercontent.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt/main/images/the-market.png)](https://github.com/zulhaq-analytics/dubai-real-estate-snowflake-dbt)
 
-A daily pipeline over 15 Dubai Land Department open datasets (15.4 million rows): a Python loader that pulls new records from the DLD API every morning, a DuckDB warehouse, a tested dbt project (staging, intermediate and mart layers, 100+ tests, snapshots) that runs on both DuckDB and Snowflake, a 12-month forecast in Python, and an 11-page Power BI report on prices, rental yields, developers, sales speed and financing that refreshes itself daily through a gateway. The first version ran on Snowflake with role-based security, key-pair service accounts and Snowflake ML. After the move, 13 of 17 reconciliation checks matched exactly and the rest differed by 4 sales that DLD had re-dated.
+A daily pipeline over 15 Dubai Land Department open datasets (15.4 million rows): a Python loader that pulls new records from the DLD API every morning on a free Oracle Cloud server in Dubai (the API only accepts UAE connections), a DuckDB warehouse, a tested dbt project (staging, intermediate and mart layers, 100+ tests, snapshots) that runs on both DuckDB and Snowflake, a 12-month forecast in Python, and an 11-page Power BI report on prices, rental yields, developers, sales speed and financing that refreshes itself daily from Oracle Object Storage. The first version ran on Snowflake with role-based security, key-pair service accounts and Snowflake ML. After the move, 13 of 17 reconciliation checks matched exactly and the rest differed by 4 sales that DLD had re-dated.
 
 **Finding:** 2025 was a record year, with 214,532 sales worth AED 662.7bn, up 19.7%. Ready homes yielded 6.4% gross and 5.4% net of service charges, but new launches are selling more slowly: 77% of units sold in the first year, down from 96% for 2022 launches.
 
@@ -82,11 +82,11 @@ An automated Microsoft Fabric solution over 49.3 million U.S. government flight 
 
 ## Skills
 
-**Cloud data platforms:** Databricks (Unity Catalog, Delta Lake, PySpark, Spark SQL, scheduled jobs, MLflow, Git folders), Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML), Google BigQuery (BigQuery ML, scheduled workflows), DuckDB (local warehouse, Parquet export)
+**Cloud data platforms:** Databricks (Unity Catalog, Delta Lake, PySpark, Spark SQL, scheduled jobs, MLflow, Git folders), Microsoft Fabric (Data Factory, Lakehouse, PySpark, Delta Lake, Direct Lake), Snowflake (RBAC, key-pair authentication, resource monitors, Snowflake ML), Google BigQuery (BigQuery ML, scheduled workflows), DuckDB (file-based warehouse, Parquet export), Oracle Cloud (Linux server, cron scheduling, Object Storage)
 
 **Transformation:** dbt (layered modeling, tests, macros, snapshots, scheduled jobs), Dataform, SQL
 
-**Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor, gateway scheduled refresh
+**Power BI:** DAX, Power Query, data modeling, RLS, Tabular Editor, scheduled refresh from cloud storage and through gateways
 
 **Tableau:** Tableau Public dashboards with daily data sync, parameter-driven pages, map flow lines
 
